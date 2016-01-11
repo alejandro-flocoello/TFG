@@ -27,7 +27,7 @@ public class VideosActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
     }
 
