@@ -21,4 +21,22 @@
         android:clickable="false"
         android:onClick="muestraVideos" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Alarma"
+        android:id="@+id/buttonAlarma"
+        android:layout_below="@+id/buttonVideos"
+        android:layout_alignStart="@+id/buttonVideos"
+        android:onClick="muestraAlarma" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Menajes"
+        android:id="@+id/buttonMensajes"
+        android:layout_below="@+id/buttonAlarma"
+        android:layout_alignStart="@+id/buttonAlarma"
+        android:onClick="muestraMensajes" />
+
 </RelativeLayout>
