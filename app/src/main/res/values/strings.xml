@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TFG</string>
     <string name="action_settings">Settings</string>
-    <string name="buttonVideos">VIDEOS</string>
+    <string name="Videos">VIDEOS</string>
     <string name="title_activity_videos">Videos</string>
+    <string name="title_activity_mensajes">Mensajes</string>
+    <string name="title_activity_alarma">Alarma</string>
 </resources>

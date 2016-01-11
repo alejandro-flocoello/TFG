@@ -57,4 +57,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, VideosActivity.class);
         startActivity(intent);
     }
+
+    public void muestraMensajes(View view) {
+        // Do something in response to button VIDEOS
+        Intent intent = new Intent(this, MensajesActivity.class);
+        startActivity(intent);
+    }
+
+    public void muestraAlarma(View view) {
+        // Do something in response to button VIDEOS
+        Intent intent = new Intent(this, AlarmaActivity.class);
+        startActivity(intent);
+    }
+
+
 }

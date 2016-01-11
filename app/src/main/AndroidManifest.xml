@@ -34,6 +34,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="es.upm.ssr.gatv.tfg.MainActivity" />
         </activity>
+        <activity
+            android:name=".MensajesActivity"
+            android:label="@string/title_activity_mensajes"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.upm.ssr.gatv.tfg.MainActivity" />
+        </activity>
+        <activity
+            android:name=".AlarmaActivity"
+            android:label="@string/title_activity_alarma"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.upm.ssr.gatv.tfg.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
