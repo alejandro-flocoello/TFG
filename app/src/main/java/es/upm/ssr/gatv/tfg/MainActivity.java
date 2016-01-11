@@ -1,5 +1,6 @@
 package es.upm.ssr.gatv.tfg;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -48,5 +49,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /** Called when the user clicks the Send button */
+    public void muestraVideos(View view) {
+        // Do something in response to button VIDEOS
+        Intent intent = new Intent(this, VideosActivity.class);
+        startActivity(intent);
     }
 }

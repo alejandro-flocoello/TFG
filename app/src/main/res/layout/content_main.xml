@@ -22,9 +22,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Videos"
-        android:id="@+id/button"
+        android:id="@+id/buttonVideos"
         android:layout_below="@+id/textView"
         android:layout_marginStart="35dp"
-        android:layout_marginTop="113dp" />
+        android:layout_marginTop="113dp"
+        android:clickable="true"
+        android:contextClickable="false"
+        android:enabled="false"
+        android:onClick="muestraVideos" />
 
 </RelativeLayout>
