@@ -53,22 +53,38 @@ public class MainActivity extends AppCompatActivity {
 
     /** Called when the user clicks the Send button */
     public void muestraVideos(View view) {
-        // Do something in response to button VIDEOS
+        // Do something in response to button Videos
         Intent intent = new Intent(this, VideosActivity.class);
         startActivity(intent);
     }
 
     public void muestraMensajes(View view) {
-        // Do something in response to button VIDEOS
+        // Do something in response to button Mensajes
         Intent intent = new Intent(this, MensajesActivity.class);
         startActivity(intent);
     }
 
     public void muestraAlarma(View view) {
-        // Do something in response to button VIDEOS
+        // Do something in response to button Alarma
         Intent intent = new Intent(this, AlarmaActivity.class);
         startActivity(intent);
     }
+    public void muestraJuegos(View view) {
+        // Do something in response to button Juegos
+        Intent intent = new Intent(this, JuegosActivity.class);
+        startActivity(intent);
+    }
 
+    public void muestraVideoConferencia(View view) {
+        // Do something in response to button VideoConferencia
+        Intent intent = new Intent(this, VideoConferenciaActivity.class);
+        startActivity(intent);
+    }
+
+    public void muestraAjustes(View view) {
+        // Do something in response to button Ajustes
+        Intent intent = new Intent(this, AjustesActivity.class);
+        startActivity(intent);
+    }
 
 }

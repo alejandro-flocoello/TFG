@@ -6,5 +6,11 @@
     <string name="title_activity_mensajes">Mensajes</string>
     <string name="title_activity_alarma">Alarma</string>
     <string name="Alarma">ALARMA</string>
-    <string name="Menajes">MENSAJES</string>
+    <string name="Mensajes">MENSAJES</string>
+    <string name="Juegos">JUEGOS</string>
+    <string name="Videoconferencia">VIDEOCONFERENCIA</string>
+    <string name="title_activity_juegos">Juegos</string>
+    <string name="title_activity_ajustes">Ajustes</string>
+    <string name="title_activity_video_conferencia">VideoConferencia</string>
+    <string name="Ajustes">AJUSTES</string>
 </resources>

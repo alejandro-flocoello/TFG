@@ -9,7 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.upm.ssr.gatv.tfg.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:onClick="muestraAjustes">
 
     <Button
         android:layout_width="wrap_content"
@@ -33,10 +34,37 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Menajes"
+        android:text="@string/Mensajes"
         android:id="@+id/buttonMensajes"
         android:layout_below="@+id/buttonAlarma"
         android:layout_alignStart="@+id/buttonAlarma"
         android:onClick="muestraMensajes" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Juegos"
+        android:id="@+id/buttonJuegos"
+        android:layout_below="@+id/buttonMensajes"
+        android:layout_alignStart="@+id/buttonMensajes"
+        android:onClick="muestraJuegos" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Videoconferencia"
+        android:id="@+id/buttonVideoconferencia"
+        android:layout_below="@+id/buttonJuegos"
+        android:layout_alignStart="@+id/buttonJuegos"
+        android:onClick="muestraVideoConferencia" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonAjustes"
+        android:layout_below="@+id/buttonVideoconferencia"
+        android:layout_alignStart="@+id/buttonVideoconferencia"
+        android:text="@string/Ajustes"
+        android:onClick="muestraAjustes" />
 
 </RelativeLayout>

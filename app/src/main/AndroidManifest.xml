@@ -52,6 +52,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="es.upm.ssr.gatv.tfg.MainActivity" />
         </activity>
+        <activity
+            android:name=".JuegosActivity"
+            android:label="@string/title_activity_juegos"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.upm.ssr.gatv.tfg.MainActivity" />
+        </activity>
+        <activity
+            android:name=".AjustesActivity"
+            android:label="@string/title_activity_ajustes"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.upm.ssr.gatv.tfg.MainActivity" />
+        </activity>
+        <activity
+            android:name=".VideoConferenciaActivity"
+            android:label="@string/title_activity_video_conferencia"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.upm.ssr.gatv.tfg.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
