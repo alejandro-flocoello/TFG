@@ -60,11 +60,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4c9187bf-4435-4a1d-bbeb-dd9a79e6d4f0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/AjustesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/AjustesActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/AlarmaActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/AlarmaActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/JuegosActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/JuegosActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/MensajesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/MensajesActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/VideoConferenciaActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/VideoConferenciaActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/VideosActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/VideosActivity.java" />
     </list>
     <ignored path="TFG.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -92,10 +87,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="VideosActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="VideosActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/VideosActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.275093">
+            <state vertical-scroll-proportion="0.0">
               <caret line="53" column="63" selection-start-line="53" selection-start-column="63" selection-end-line="53" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -150,7 +145,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/AjustesActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="58" selection-start-line="15" selection-start-column="58" selection-end-line="15" selection-end-column="58" />
+              <caret line="42" column="73" selection-start-line="42" selection-start-column="73" selection-end-line="42" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -176,11 +171,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.7267658">
+              <caret line="23" column="34" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -1798,10 +1793,10 @@
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/AlarmaActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/VideosActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/AjustesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/MensajesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/JuegosActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/VideoConferenciaActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/AjustesActivity.java" />
       </list>
     </option>
   </component>
@@ -2133,7 +2128,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
+    <frame x="-8" y="-8" width="1296" height="1000" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2449,34 +2444,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="81" selection-start-line="21" selection-start-column="81" selection-end-line="21" selection-end-column="81" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/AjustesActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="58" selection-start-line="15" selection-start-column="58" selection-end-line="15" selection-end-column="58" />
           <folding />
         </state>
       </provider>
@@ -2515,13 +2486,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/VideosActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.275093">
+        <state vertical-scroll-proportion="0.0">
           <caret line="53" column="63" selection-start-line="53" selection-start-column="63" selection-end-line="53" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1326#1594#0" expanded="true" />
             <element signature="e#1593#1594#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/es/upm/ssr/gatv/tfg/AjustesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="73" selection-start-line="42" selection-start-column="73" selection-end-line="42" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7267658">
+          <caret line="23" column="34" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
