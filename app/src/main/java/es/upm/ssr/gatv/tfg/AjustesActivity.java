@@ -1,6 +1,9 @@
 package es.upm.ssr.gatv.tfg;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public class AjustesActivity extends AppCompatActivity {
+
+    private static final String DEBUG_TAG = "NetworkStatus";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,12 @@ public class AjustesActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
+    }
+    public boolean isOnline() {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
 }

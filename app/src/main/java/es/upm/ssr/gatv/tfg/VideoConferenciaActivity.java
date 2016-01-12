@@ -1,14 +1,20 @@
 package es.upm.ssr.gatv.tfg;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 public class VideoConferenciaActivity extends AppCompatActivity {
+
+    private static final String DEBUG_TAG = "NetworkStatus";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +31,34 @@ public class VideoConferenciaActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
+        boolean conectado = isOnline();
+        Log.d(DEBUG_TAG, "Conectado: " + conectado);
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null) { // connected to the internet
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                boolean isWifiConn = networkInfo.isConnected();
+                Log.d(DEBUG_TAG, "Wifi conectado: " + isWifiConn);
+            } else if (networkInfo.getType() == ConnectivityManager.TYPE_ETHERNET) {
+                // connected to the mobile provider's data plan
+                boolean isEthernetConn = networkInfo.isConnected();
+                Log.d(DEBUG_TAG, "Ethernet conectado: " + isEthernetConn);
+            }
+        } else {
+            // not connected to the internet
+            Log.d(DEBUG_TAG, "App is not connected to the Internet ");
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
 }

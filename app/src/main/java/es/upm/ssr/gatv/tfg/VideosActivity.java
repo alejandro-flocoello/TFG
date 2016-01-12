@@ -19,7 +19,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class VideosActivity extends AppCompatActivity {
 
-    private static final String DEBUG_TAG = "NetworkStatusExample";
+    private static final String DEBUG_TAG = "NetworkStatus";
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
