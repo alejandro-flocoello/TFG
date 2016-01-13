@@ -33,9 +33,22 @@ public class AlarmaActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
-        boolean conectado = isOnline();
-        Log.d(DEBUG_TAG, "Conectado: " + conectado);
+        isOnline();
+        checkConnection();
 
+    }
+
+    public void isOnline() {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        boolean conectado = (networkInfo != null && networkInfo.isConnected());
+        Log.d(DEBUG_TAG, "Conectado: " + conectado);
+        
+    }
+
+
+    private void checkConnection() {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -52,14 +65,6 @@ public class AlarmaActivity extends AppCompatActivity {
             // not connected to the internet
             Log.d(DEBUG_TAG, "App is not connected to the Internet ");
         }
-
-    }
-
-    public boolean isOnline() {
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
     }
 
 }
