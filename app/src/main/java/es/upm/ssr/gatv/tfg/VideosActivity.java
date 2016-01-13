@@ -2,22 +2,29 @@ package es.upm.ssr.gatv.tfg;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import es.upm.ssr.gatv.tfg.StackOverflowXmlParser.Entry;
+
+import org.xmlpull.v1.XmlPullParserException;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,11 +33,17 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
 
 public class VideosActivity extends AppCompatActivity {
 
     private static final String DEBUG_TAG = "NetworkStatus";
     private static final String DEBUG_CONNECTION_TAG = "HttpConecction";
+    // private static final String URL ="http://stackoverflow.com/feeds/tag?tagnames=android&sort=newest";
+    private static final String URL ="http://138.4.47.33:2103/afc/home/Mensajes/Videos/";
     private TextView textView;
 
     /**
@@ -58,7 +71,7 @@ public class VideosActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         isOnline();
-        checkConnection();
+        loadPage();
 
 
 
@@ -120,85 +133,125 @@ public class VideosActivity extends AppCompatActivity {
     }
 
 
-    private void checkConnection() {
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
+    private boolean checkConnection(){
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        boolean conectado = false;
         if (networkInfo != null) { // connected to the internet
             if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                 boolean isWifiConn = networkInfo.isConnected();
                 Log.d(DEBUG_TAG, "Wifi conectado: " + isWifiConn);
+                conectado = isWifiConn;
             } else if (networkInfo.getType() == ConnectivityManager.TYPE_ETHERNET) {
                 // connected to the mobile provider's data plan
                 boolean isEthernetConn = networkInfo.isConnected();
                 Log.d(DEBUG_TAG, "Ethernet conectado: " + isEthernetConn);
+                conectado = isEthernetConn;
             }
         } else {
             // not connected to the internet
             Log.d(DEBUG_TAG, "App is not connected to the Internet ");
+
+        }  return conectado;
+    }
+
+    private void loadPage() {
+        boolean conectado = checkConnection();
+        if ( conectado) {
+            Log.d(DEBUG_CONNECTION_TAG,"Load Page");
+            new DownloadXmlTask().execute(URL);
+        } else {
+            showErrorPage();
+        }
+    }
+    private void showErrorPage() {
+
+        Log.d(DEBUG_CONNECTION_TAG,"Error al cargar");
+        setContentView(R.layout.content_videos);
+        //
+        //        // The specified network connection is not available. Displays error message.
+       WebView myWebView = (WebView) findViewById(R.id.webView);
+       myWebView.loadData(getResources().getString(R.string.connection_error),"text/html", null);
+    }
+
+    private class DownloadXmlTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                Log.d(DEBUG_CONNECTION_TAG,"Load XMLFromNetwork");
+                System.out.println(urls[0]);
+                return loadXmlFromNetwork(urls[0]);
+                } catch (IOException e) {
+                return getResources().getString(R.string.connection_error);
+            } catch (XmlPullParserException e) {
+                return getResources().getString(R.string.xml_error);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            setContentView(R.layout.content_videos);
+            // Displays the HTML string in the UI via a WebView
+             WebView myWebView = (WebView) findViewById(R.id.webView);
+             myWebView.loadData(result, "text/html", null);
         }
     }
 
+    private String loadXmlFromNetwork(String urlString) throws XmlPullParserException, IOException {
+        InputStream stream = null;
+          StackOverflowXmlParser stackOverflowXmlParser = new StackOverflowXmlParser();
+          List<Entry> entries = null;
+          String title = null;
+          String url = null;
+          String summary = null;
+          Calendar rightNow = Calendar.getInstance();
+          DateFormat formatter = new SimpleDateFormat("MMM dd h:mmaa");
+        //
+        //   // Checks whether the user set the preference to include summary text
+        //   SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //   boolean pref = sharedPrefs.getBoolean("summaryPref", false);
 
+        StringBuilder htmlString = new StringBuilder();
+        htmlString.append("<h3>" + getResources().getString(R.string.page_title) + "</h3>");
+        htmlString.append("<em>" + getResources().getString(R.string.updated) + " " +
+                formatter.format(rightNow.getTime()) + "</em>");
 
-
-        protected String doInBackground(String... urls) {
-
-            // params comes from the execute() call: params[0] is the url.
-            try {
-                return downloadUrl(urls[0]);
-            } catch (IOException e) {
-                return "Unable to retrieve web page. URL may be invalid.";
+        try {
+            stream = downloadUrl(urlString);
+            entries = stackOverflowXmlParser.parse(stream);
+            // Makes sure that the InputStream is closed after the app is
+            // finished using it.
+        } finally {
+            if (stream != null) {
+                stream.close();
             }
         }
 
-        // onPostExecute displays the results of the AsyncTask.
+        // StackOverflowXmlParser returns a List (called "entries") of Entry objects.
+        // Each Entry object represents a single post in the XML feed.
+        // This section processes the entries list to combine each entry with HTML markup.
+        // Each entry is displayed in the UI as a link that optionally includes
+        // a text summary.
 
-        protected void onPostExecute(String result) {
-            textView.setText(result);
-        }
+        return htmlString.toString();
+    }
 
-        private String downloadUrl(String myurl) throws IOException {
-            InputStream is = null;
-            // Only display the first 500 characters of the retrieved
-            // web page content.
-            int len = 500;
+    // Given a string representation of a URL, sets up a connection and gets
+    // an input stream.
+    private InputStream downloadUrl(String urlString) throws IOException {
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(10000 /* milliseconds */);
+        conn.setConnectTimeout(15000 /* milliseconds */);
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+        // Starts the query
+        conn.connect();
+        InputStream stream = conn.getInputStream();
+        return stream;
+    }
 
-            try {
-                URL url = new URL(myurl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                // Starts the query
-                conn.connect();
-                int response = conn.getResponseCode();
-                Log.d(DEBUG_TAG, "The response is: " + response);
-                is = conn.getInputStream();
-
-                // Convert the InputStream into a string
-                String contentAsString = readIt(is, len);
-                return contentAsString;
-
-                // Makes sure that the InputStream is closed after the app is
-                // finished using it.
-            } finally {
-                if (is != null) {
-                    is.close();
-                }
-            }
-
-        }
-
-        public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-            Reader reader = null;
-            reader = new InputStreamReader(stream, "UTF-8");
-            char[] buffer = new char[len];
-            reader.read(buffer);
-            return new String(buffer);
-
-        }
 
 
 

@@ -13,4 +13,10 @@
     <string name="title_activity_ajustes">Ajustes</string>
     <string name="title_activity_video_conferencia">VideoConferencia</string>
     <string name="Ajustes">AJUSTES</string>
+
+    <string name="connection_error">Unable to load content. Check your network connection.</string>
+    <string name="xml_error">Error parsing XML.</string>
+    <string name="page_title">Newest StackOverflow questions tagged \'android\'</string>
+    <string name="updated">Last updated:</string>
+
 </resources>
