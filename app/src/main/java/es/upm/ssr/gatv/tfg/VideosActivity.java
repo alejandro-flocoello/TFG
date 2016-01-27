@@ -43,7 +43,7 @@ public class VideosActivity extends AppCompatActivity {
     private static final String DEBUG_TAG = "NetworkStatus";
     private static final String DEBUG_CONNECTION_TAG = "HttpConecction";
     // private static final String URL ="http://stackoverflow.com/feeds/tag?tagnames=android&sort=newest";
-    private static final String URL ="http://138.4.47.33:2103/afc/home/Mensajes/Videos/";
+    private static final String URL ="http://138.4.47.33:2103/afc/home/Mensajes/prueba.html";
     private TextView textView;
 
     /**
@@ -170,8 +170,8 @@ public class VideosActivity extends AppCompatActivity {
         setContentView(R.layout.content_videos);
         //
         //        // The specified network connection is not available. Displays error message.
-       WebView myWebView = (WebView) findViewById(R.id.webView);
-       myWebView.loadData(getResources().getString(R.string.connection_error),"text/html", null);
+        WebView myWebView = (WebView) findViewById(R.id.webView);
+        myWebView.loadData(getResources().getString(R.string.connection_error),"text/html", null);
     }
 
     private class DownloadXmlTask extends AsyncTask<String, Void, String> {
@@ -182,7 +182,7 @@ public class VideosActivity extends AppCompatActivity {
                 Log.d(DEBUG_CONNECTION_TAG,"Load XMLFromNetwork");
                 System.out.println(urls[0]);
                 return loadXmlFromNetwork(urls[0]);
-                } catch (IOException e) {
+            } catch (IOException e) {
                 return getResources().getString(R.string.connection_error);
             } catch (XmlPullParserException e) {
                 return getResources().getString(R.string.xml_error);
@@ -193,20 +193,21 @@ public class VideosActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             setContentView(R.layout.content_videos);
             // Displays the HTML string in the UI via a WebView
-             WebView myWebView = (WebView) findViewById(R.id.webView);
-             myWebView.loadData(result, "text/html", null);
+            WebView myWebView = (WebView) findViewById(R.id.webView);
+            myWebView.loadData(result, "text/html", null);
         }
     }
 
     private String loadXmlFromNetwork(String urlString) throws XmlPullParserException, IOException {
+        System.out.println("Se mete en LoadXMLFromNetwork");
         InputStream stream = null;
-          StackOverflowXmlParser stackOverflowXmlParser = new StackOverflowXmlParser();
-          List<Entry> entries = null;
-          String title = null;
-          String url = null;
-          String summary = null;
-          Calendar rightNow = Calendar.getInstance();
-          DateFormat formatter = new SimpleDateFormat("MMM dd h:mmaa");
+        StackOverflowXmlParser stackOverflowXmlParser = new StackOverflowXmlParser();
+        List<Entry> entries = null;
+        String title = null;
+        String url = null;
+        String summary = null;
+        Calendar rightNow = Calendar.getInstance();
+        DateFormat formatter = new SimpleDateFormat("MMM dd h:mmaa");
         //
         //   // Checks whether the user set the preference to include summary text
         //   SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -233,6 +234,18 @@ public class VideosActivity extends AppCompatActivity {
         // This section processes the entries list to combine each entry with HTML markup.
         // Each entry is displayed in the UI as a link that optionally includes
         // a text summary.
+
+        for (Entry entry : entries) {
+            htmlString.append("<p><a href='");
+            htmlString.append(entry.link);
+            htmlString.append("'>" + entry.title + "</a></p>");
+            // If the user set the preference to include summary text,
+            // adds it to the display.
+            //if (pref) {
+            htmlString.append(entry.summary);
+            //}
+            System.out.println("Entry, title:"+entry.title);
+        }
 
         return htmlString.toString();
     }

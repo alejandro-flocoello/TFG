@@ -109,10 +109,13 @@ public class StackOverflowXmlParser{
             String name = parser.getName();
             if (name.equals("title")) {
                 title = readTitle(parser);
+                System.out.println(title);
             } else if (name.equals("summary")) {
                 summary = readSummary(parser);
+                System.out.println(summary);
             } else if (name.equals("link")) {
                 link = readLink(parser);
+                System.out.println(link);
             } else {
                 skip(parser);
             }
