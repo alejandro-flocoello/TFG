@@ -8,24 +8,17 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="es.upm.ssr.gatv.tfg.VideosActivity"
-    tools:showIn="@layout/activity_videos">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="es.upm.ssr.gatv.tfg.VideoPlayerActivity"
+    tools:showIn="@layout/activity_video_player">
 
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/webView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="125dp" />
-
-    <Button
+    <VideoView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/PlayVideo"
-        android:id="@+id/buttonPlayVideo"
+        android:id="@+id/videoView"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="65dp"
-        android:onClick="playVideo" />
-
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="dpdp" />
 </RelativeLayout>

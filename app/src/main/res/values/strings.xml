@@ -18,5 +18,7 @@
     <string name="xml_error">Error parsing XML.</string>
     <string name="page_title">Newest StackOverflow questions tagged \'android\'</string>
     <string name="updated">Last updated:</string>
+    <string name="title_activity_video_player">VideoPlayerActivity</string>
+    <string name="PlayVideo">PLAY</string>
 
 </resources>

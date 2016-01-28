@@ -217,13 +217,14 @@ public class VideosActivity extends AppCompatActivity {
         htmlString.append("<h3>" + getResources().getString(R.string.page_title) + "</h3>");
         htmlString.append("<em>" + getResources().getString(R.string.updated) + " " +
                 formatter.format(rightNow.getTime()) + "</em>");
-
+        System.out.println("Finally");
         try {
             stream = downloadUrl(urlString);
             entries = stackOverflowXmlParser.parse(stream);
             // Makes sure that the InputStream is closed after the app is
             // finished using it.
         } finally {
+            System.out.println("Finally");
             if (stream != null) {
                 stream.close();
             }
@@ -265,7 +266,11 @@ public class VideosActivity extends AppCompatActivity {
         return stream;
     }
 
-
+    public void playVideo(View view) {
+        // Do something in response to button Videos
+        Intent intent = new Intent(this, VideoPlayerActivity.class);
+        startActivity(intent);
+    }
 
 
 }
