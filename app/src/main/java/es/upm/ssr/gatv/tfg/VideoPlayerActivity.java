@@ -14,7 +14,8 @@ import android.widget.VideoView;
 
 public class VideoPlayerActivity extends AppCompatActivity {
 
-    public static final String url = "http://138.4.47.33:2103/afc/home/Mensajes/Videos/";
+    //public static final String url = "http://138.4.47.33:2103/afc/home/Mensajes/Videos/homer.mp4";
+    public static final String url ="http://138.4.47.33:2103/afc/home/Mensajes/Videos/ding_dong_muri%c3%b3_la_bruja.mp4";
     public static final String DEBUG_REPRODUCE = "VideoPlayer" ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
