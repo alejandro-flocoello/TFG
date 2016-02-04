@@ -12,14 +12,23 @@ import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 public class VideoPlayerActivity extends AppCompatActivity {
 
     //public static final String url = "http://138.4.47.33:2103/afc/home/Mensajes/Videos/homer.mp4";
     public static final String url ="http://138.4.47.33:2103/afc/home/Mensajes/Videos/ding_dong_muri%c3%b3_la_bruja.mp4";
     public static final String DEBUG_REPRODUCE = "VideoPlayer" ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Create global configuration and initialize ImageLoader with this config
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+
+        .build();
+        ImageLoader.getInstance().init(config);
         setContentView(R.layout.activity_video_player);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -35,12 +44,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         reproduceVideo(url);
     }
-
-
-
-
-
-
 
     public void reproduceVideo(String urlString){
 

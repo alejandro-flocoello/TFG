@@ -11,10 +11,12 @@
     tools:context="es.upm.ssr.gatv.tfg.VideosActivity"
     tools:showIn="@layout/activity_videos">
 
-    <fragment
+
+    <ListView
+        android:id="@+id/entryList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="es.upm.ssr.gatv.tfg.VideosFragmentList"
-        android:id="@+id/fragment"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="false"
+        android:layout_marginTop="100dp" />
+
 </RelativeLayout>
