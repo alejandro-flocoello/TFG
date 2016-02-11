@@ -37,7 +37,7 @@ public class GatvXmlParser {
             XmlPullParser xpp = factory.newPullParser();
 
             // Open up InputStream and Reader of our file.
-            FileInputStream fis = ctx.openFileInput("Prueba.xml");
+            FileInputStream fis = ctx.openFileInput("Mensajes.xml");
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
 
             // point the parser to our file.

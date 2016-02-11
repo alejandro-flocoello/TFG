@@ -17,8 +17,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class VideoPlayerActivity extends AppCompatActivity {
 
-    //public static final String url = "http://138.4.47.33:2103/afc/home/Mensajes/Videos/homer.mp4";
-    public static final String url ="http://138.4.47.33:2103/afc/home/Mensajes/Videos/ding_dong_muri%c3%b3_la_bruja.mp4";
     public static final String DEBUG_REPRODUCE = "VideoPlayer" ;
 
     @Override
@@ -42,6 +40,11 @@ public class VideoPlayerActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Get the bundle
+        Bundle bundle = getIntent().getExtras();
+
+        //Extract the data…
+        String url = bundle.getString("url");
         reproduceVideo(url);
     }
 

@@ -11,16 +11,27 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
+
+import es.upm.ssr.gatv.tfg.Entry;
 
 public class VideosActivity extends  AppCompatActivity {
 
     private AdaptadorClass mAdapter;
     private ListView entryList;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +75,9 @@ public class VideosActivity extends  AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Actualizando contenido ...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                refreshButton();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -85,7 +97,7 @@ public class VideosActivity extends  AppCompatActivity {
     protected Void doInBackground(Void... arg0) {
         //Download the file
         try {
-            DownloaderUrl.DownloadFromUrl("http://138.4.47.33:2103/afc/home/Mensajes/prueba.xml", openFileOutput("Prueba.xml", Context.MODE_PRIVATE));
+            DownloaderUrl.DownloadFromUrl("http://138.4.47.33:2103/afc/home/Mensajes/Contenido/mensajes.xml", openFileOutput("Mensajes.xml", Context.MODE_PRIVATE));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -98,14 +110,30 @@ public class VideosActivity extends  AppCompatActivity {
         //setup our Adapter and set it to the ListView.
         mAdapter = new AdaptadorClass(VideosActivity.this, -1, GatvXmlParser.getStackSitesFromFile(VideosActivity.this));
         entryList.setAdapter(mAdapter);
-        Log.i("StackSites", "adapter size = "+ mAdapter.getCount());
+        Log.i("StackSites", "adapter size = " + mAdapter.getCount());
     }
 }
 
     public void playVideo(String url) {
         // Do something in response to button Videos
+        Bundle bundle = new Bundle();
+
+        //Add your data to bundle
+        bundle.putString("url", url);
+
+        //Add the bundle to the intent
 
         Intent intent = new Intent(this, VideoPlayerActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public  void refreshButton(){
+        Intent intent = getIntent();
+        overridePendingTransition(android.R.anim.cycle_interpolator, android.R.anim.cycle_interpolator);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         startActivity(intent);
     }
 

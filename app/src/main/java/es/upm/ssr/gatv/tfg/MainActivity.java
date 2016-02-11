@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Oh, este botón no tiene ninguna función asignada.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-            }
+                }
         });
     }
 
@@ -89,5 +89,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AjustesActivity.class);
         startActivity(intent);
     }
+
 
 }
