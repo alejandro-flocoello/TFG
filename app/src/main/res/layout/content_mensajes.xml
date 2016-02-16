@@ -11,4 +11,13 @@
     tools:context="es.upm.ssr.gatv.tfg.MensajesActivity"
     tools:showIn="@layout/activity_mensajes">
 
+    <ListView
+        android:id="@+id/entryListMensajes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="false"
+        android:layout_marginTop="100dp" />
+
+
+
 </RelativeLayout>

@@ -97,6 +97,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="es.upm.ssr.gatv.tfg.VideosActivity" />
         </activity>
+        <activity
+            android:name=".ShowMessageActivity"
+            android:label="@string/title_activity_show_message"
+            android:parentActivityName=".MensajesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.upm.ssr.gatv.tfg.MensajesActivity" />
+        </activity>
     </application>
 
 </manifest>

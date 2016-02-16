@@ -44,7 +44,7 @@ public class JuegosActivity extends AppCompatActivity {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         boolean conectado = (networkInfo != null && networkInfo.isConnected());
         Log.d(DEBUG_TAG, "Conectado: " + conectado);
-        
+
     }
 
 

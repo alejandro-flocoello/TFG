@@ -116,5 +116,7 @@ public class AdaptadorClass extends ArrayAdapter<Entry> {
 
     }
 
+
+
 }
 
