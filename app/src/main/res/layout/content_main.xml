@@ -20,6 +20,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="113dp"
         android:clickable="false"
+        android:drawableBottom="@drawable/ic_videos"
         android:onClick="muestraVideos" />
 
     <Button
@@ -29,6 +30,7 @@
         android:id="@+id/buttonAlarma"
         android:layout_below="@+id/buttonVideos"
         android:layout_alignStart="@+id/buttonVideos"
+        android:drawableBottom="@drawable/ic_action_alarm"
         android:onClick="muestraAlarma" />
 
     <Button
@@ -38,6 +40,7 @@
         android:id="@+id/buttonMensajes"
         android:layout_below="@+id/buttonAlarma"
         android:layout_alignStart="@+id/buttonAlarma"
+        android:drawableBottom="@drawable/ic_action_gmail"
         android:onClick="muestraMensajes" />
 
     <Button
@@ -47,6 +50,7 @@
         android:id="@+id/buttonJuegos"
         android:layout_below="@+id/buttonMensajes"
         android:layout_alignStart="@+id/buttonMensajes"
+        android:drawableBottom="@drawable/ic_action_knight"
         android:onClick="muestraJuegos" />
 
     <Button
@@ -56,6 +60,7 @@
         android:id="@+id/buttonVideoconferencia"
         android:layout_below="@+id/buttonJuegos"
         android:layout_alignStart="@+id/buttonJuegos"
+        android:drawableBottom="@drawable/ic_action_users"
         android:onClick="muestraVideoConferencia" />
 
     <Button
@@ -65,6 +70,7 @@
         android:layout_below="@+id/buttonVideoconferencia"
         android:layout_alignStart="@+id/buttonVideoconferencia"
         android:text="@string/Ajustes"
+        android:drawableBottom="@drawable/ic_settings"
         android:onClick="muestraAjustes" />
 
 </RelativeLayout>
