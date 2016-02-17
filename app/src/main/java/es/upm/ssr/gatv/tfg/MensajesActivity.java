@@ -48,7 +48,8 @@ public class MensajesActivity extends  AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
                 String url = mAdapter.getItem(pos).getImgUrl();
-                showMensaje(url);
+                String txt = mAdapter.getItem(pos).getSummary();
+                showMensaje(url,txt);
 //                Intent i = new Intent(Intent.ACTION_VIEW);
 //                i.setData(Uri.parse(url));
 //                startActivity(i);
@@ -80,7 +81,7 @@ public class MensajesActivity extends  AppCompatActivity {
                 refreshButton();
             }
         });
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -114,12 +115,13 @@ public class MensajesActivity extends  AppCompatActivity {
         }
     }
 
-    public void showMensaje(String url) {
+    public void showMensaje(String url , String txt) {
         // Do something in response to button Mensajes
         Bundle bundle = new Bundle();
 
         //Add your data to bundle
         bundle.putString("url", url);
+        bundle.putString("txt",txt);
 
         //Add the bundle to the intent
 

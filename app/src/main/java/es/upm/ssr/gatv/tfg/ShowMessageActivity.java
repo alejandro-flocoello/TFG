@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.net.URL;
 
 public class ShowMessageActivity extends AppCompatActivity {
@@ -29,18 +31,19 @@ public class ShowMessageActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         //Extract the data…
         String url = bundle.getString("url");
-        cargaMensajes(url);
+        String txt = bundle.getString("txt");
+        cargaMensajes(url,txt);
     }
 
-    public void cargaMensajes(String urlString){
+    public void cargaMensajes(String urlString, String txt){
 
         try {
+
+            ImageLoader imageLoader = ImageLoader.getInstance();
             ImageView messageImg = (ImageView)findViewById(R.id.messageImg);
             TextView messageText = (TextView) findViewById(R.id.messageText);
-            URL url = new URL(urlString);
-            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            messageImg.setImageBitmap(bmp);
-
+            imageLoader.displayImage(urlString, messageImg);
+            messageText.setText(txt);
             Log.d(DEBUG_MENSAJES, "Cargando el mensaje");
         } catch (Exception e){
             // TODO: handle exception
