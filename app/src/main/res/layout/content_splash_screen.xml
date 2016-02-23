@@ -8,15 +8,17 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="es.upm.ssr.gatv.tfg.VideoPlayerActivity"
-    tools:showIn="@layout/activity_video_player">
+    tools:context="es.upm.ssr.gatv.tfg.SplashScreen"
+    tools:showIn="@layout/activity_splash_screen"
+    android:background="#2c14c9">
 
-    <VideoView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/videoView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"/>
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:baselineAlignBottom="true"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/bckground_img" />
 </RelativeLayout>

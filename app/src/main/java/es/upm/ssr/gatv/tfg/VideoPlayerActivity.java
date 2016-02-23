@@ -28,6 +28,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         .build();
         ImageLoader.getInstance().init(config);
         setContentView(R.layout.activity_video_player);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -45,7 +46,11 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
         //Extract the data…
         String url = bundle.getString("url");
+        String title = bundle.getString("title");
         reproduceVideo(url);
+
+        setTitle(title);
+
     }
 
     public void reproduceVideo(String urlString){

@@ -48,7 +48,9 @@ public class VideosActivity extends  AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
                 String url = mAdapter.getItem(pos).getLink();
-                playVideo(url);
+                String title = mAdapter.getItem(pos).getTitle();
+
+                playVideo(url, title);
 //                Intent i = new Intent(Intent.ACTION_VIEW);
 //                i.setData(Uri.parse(url));
 //                startActivity(i);
@@ -114,12 +116,13 @@ public class VideosActivity extends  AppCompatActivity {
     }
 }
 
-    public void playVideo(String url) {
+    public void playVideo(String url, String title) {
         // Do something in response to button Videos
         Bundle bundle = new Bundle();
 
         //Add your data to bundle
         bundle.putString("url", url);
+        bundle.putString("title", title);
 
         //Add the bundle to the intent
 
