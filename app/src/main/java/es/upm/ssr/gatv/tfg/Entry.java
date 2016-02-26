@@ -10,6 +10,7 @@ public class Entry {
     private String link;
     private String summary;
     private String imgUrl;
+    private String imgMsgUrl;
 
     public String getTitle() {
         return title;
@@ -35,9 +36,13 @@ public class Entry {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+    public String getImgMsgUrl() {
+        return imgMsgUrl;
+    }
+    public void setImgMsgUrl(String imgMsgUrl){this.imgMsgUrl = imgMsgUrl;}
     @Override
     public String toString() {
         return "Entry [title=" + title + ", link=" + link + ", summary="
-                + summary + ", imgUrl=" + imgUrl + "]";
+                + summary + ", imgUrl=" + imgUrl + ", imgMsgUrl=" + imgMsgUrl + "]";
     }
 }

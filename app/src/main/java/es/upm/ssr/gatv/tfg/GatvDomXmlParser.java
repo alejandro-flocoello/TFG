@@ -35,7 +35,7 @@ public class GatvDomXmlParser {
     static final String KEY_LINK = "link";
     static final String KEY_SUMMARY = "summary";
     static final String KEY_IMAGE_URL = "image";
-
+    static final String KEY_IMAGE_MSG_URL = "imagemsg";
     /*
      * High level method that will read the xml file and parse it
      * into a List of StackSite objects.
@@ -53,11 +53,11 @@ public class GatvDomXmlParser {
             Entry curStackSite = new Entry();
             Element e = (Element) nl.item(i);
 
-            curStackSite.setTitle(getValue(e,KEY_TITLE));
-            curStackSite.setLink(getValue(e,KEY_LINK));
-            curStackSite.setSummary(getValue(e,KEY_SUMMARY));
-            curStackSite.setImgUrl(getValue(e,KEY_IMAGE_URL));
-
+            curStackSite.setTitle(getValue(e, KEY_TITLE));
+            curStackSite.setLink(getValue(e, KEY_LINK));
+            curStackSite.setSummary(getValue(e, KEY_SUMMARY));
+            curStackSite.setImgUrl(getValue(e, KEY_IMAGE_URL));
+            curStackSite.setImgMsgUrl(getValue(e, KEY_IMAGE_MSG_URL));
             //Log.i("StackSites", curStackSite.getName());
             stackSites.add(curStackSite);
         }

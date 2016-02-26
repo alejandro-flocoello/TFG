@@ -42,10 +42,10 @@ public class ShowMessageActivity extends AppCompatActivity {
         //Get the bundle
         Bundle bundle = getIntent().getExtras();
         //Extract the data…
-        String url = bundle.getString("url");
+        String img_msg = bundle.getString("img_msg");
         String txt = bundle.getString("txt");
         String title = bundle.getString("title");
-        cargaMensajes(url,txt);
+        cargaMensajes(img_msg,txt);
 
         setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
