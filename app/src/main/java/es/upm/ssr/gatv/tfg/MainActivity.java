@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void muestraAjustes(View view) {
         // Do something in response to button Ajustes
-        Intent intent = new Intent(this, AjustesActivity.class);
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
