@@ -30,4 +30,14 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_add_friends_to_messages" />
 
+    <ListPreference
+        android:defaultValue="16"
+        android:entries="@array/pref_set_text_size"
+        android:entryValues="@array/pref_set_text_size_values"
+        android:key="set_text_list"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_set_text_size" />
+
+
 </PreferenceScreen>
