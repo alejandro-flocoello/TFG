@@ -17,4 +17,9 @@
         android:icon="@drawable/ic_sync_black_24dp"
         android:title="@string/pref_header_data_sync" />
 
+    <header
+        android:fragment="es.upm.ssr.gatv.tfg.SettingsActivity$SintetizadorVozPreferenceFragment"
+        android:icon="@drawable/ic_action_mic"
+        android:title="@string/pref_header_voz" />
+
 </preference-headers>

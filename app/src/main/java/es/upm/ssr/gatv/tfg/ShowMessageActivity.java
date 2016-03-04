@@ -28,13 +28,10 @@ import java.util.Locale;
 public class ShowMessageActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
     public static final String DEBUG_MENSAJES = "ShowMessage" ;
-    private SpeakVoiceClass speaker;
     private TextToSpeech tts;
     private Button btnSpeak;
     private String messageText;
-    private final int CHECK_CODE = 0x1;
-    private final int LONG_DURATION = 5000;
-    private final int SHORT_DURATION = 1200;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +65,12 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
         btnSpeak = (Button) findViewById(R.id.btnSpeak);
         btnSpeak.setOnClickListener(new View.OnClickListener() {
 
-                     @Override
-             public void onClick(View arg0) {
-                  dime_algo(messageText);
-                   }
+            @Override
+            public void onClick(View arg0) {
+                sintetiza(messageText);
+            }
 
-            });
+        });
 
         setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -92,7 +89,6 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
                     .getDefaultSharedPreferences(this);
             Integer myNum = Integer.parseInt(sharedPrefs.getString("set_text_list", "NULL"));
             messageText.setTextSize(myNum);
-            //speaker.speak(messageText.getText().toString());
             Log.d(DEBUG_MENSAJES, "Cargando el mensaje");
         } catch (Exception e){
             // TODO: handle exception
@@ -105,43 +101,43 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
 
 
     //Inicia TTS
-      @Override
-      public void onInit(int status) {
+    @Override
+    public void onInit(int status) {
 
-          if ( status == TextToSpeech.SUCCESS ) {
+        if ( status == TextToSpeech.SUCCESS ) {
 
-                //coloca lenguaje por defecto en el celular, en nuestro caso el lenguaje es aspañol ;)
-                int result = tts.setLanguage( Locale.getDefault() );
+            //coloca lenguaje por defecto en el celular, en nuestro caso el lenguaje es aspañol ;)
+            int result = tts.setLanguage( Locale.getDefault() );
 
-                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    btnSpeak.setEnabled(false);
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                btnSpeak.setEnabled(false);
 
-                    Log.e("TTS", "This Language is not supported");
-                   } else {
-                    btnSpeak.setEnabled(true);
+                Log.e("TTS", "This Language is not supported");
+            } else {
+                btnSpeak.setEnabled(true);
 
-                   }
-
-               } else {
-                Log.e("TTS", "Initilization Failed!");
-               }
-         }
-
-
-        private void dime_algo( String texto ) {
-            tts.speak( texto, TextToSpeech.QUEUE_FLUSH, null );
-            Log.e("TTS", "Dime algo");
-         }
-
-     //Cuando se cierra la aplicacion se destruye el TTS
-             @Override
-
-
-         protected void onDestroy() {
-                 if (tts != null) {
-                     tts.stop();
-                     tts.shutdown();
-                       }
-                 super.onDestroy();
             }
+
+        } else {
+            Log.e("TTS", "Initilization Failed!");
+        }
+    }
+
+
+    private void sintetiza( String texto ) {
+        tts.speak( texto, TextToSpeech.QUEUE_FLUSH, null );
+        Log.e("TTS", "Dime algo");
+    }
+
+    //Cuando se cierra la aplicacion se destruye el TTS
+    @Override
+
+
+    protected void onDestroy() {
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
 }

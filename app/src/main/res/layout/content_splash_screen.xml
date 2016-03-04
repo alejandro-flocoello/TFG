@@ -13,12 +13,12 @@
     android:background="#2c14c9">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="800dp"
+        android:layout_height="match_parent"
         android:id="@+id/imageView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:baselineAlignBottom="true"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/logo_gatv"
         android:contentDescription="@string/bckground_img" />
 </RelativeLayout>

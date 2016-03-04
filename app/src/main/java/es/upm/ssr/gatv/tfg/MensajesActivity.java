@@ -1,6 +1,7 @@
 package es.upm.ssr.gatv.tfg;
 
         import android.content.Context;
+        import android.content.DialogInterface;
         import android.content.Intent;
         import android.net.ConnectivityManager;
         import android.net.NetworkInfo;
@@ -8,6 +9,8 @@ package es.upm.ssr.gatv.tfg;
         import android.os.Bundle;
         import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.Snackbar;
+        import android.support.v4.app.FragmentActivity;
+        import android.support.v7.app.AlertDialog;
         import android.support.v7.app.AppCompatActivity;
         import android.support.v7.widget.Toolbar;
         import android.util.Log;
@@ -26,7 +29,7 @@ package es.upm.ssr.gatv.tfg;
 
         import es.upm.ssr.gatv.tfg.Entry;
 
-public class MensajesActivity extends  AppCompatActivity {
+public class MensajesActivity extends  AppCompatActivity{
 
     private AdaptadorClass mAdapter;
     private ListView entryListMensajes;
@@ -95,12 +98,15 @@ public class MensajesActivity extends  AppCompatActivity {
 
     private class EntryDownloadTask extends AsyncTask<Void, Void, Void> {
 
+        public boolean server;
         @Override
         protected Void doInBackground(Void... arg0) {
             //Download the file
             try {
                 DownloaderUrl.DownloadFromUrl("http://138.4.47.33:2103/afc/home/Mensajes/Contenido/mensajes.xml", openFileOutput("Mensajes.xml", Context.MODE_PRIVATE));
-            } catch (FileNotFoundException e) {
+                server = DownloaderUrl.setServer();
+                Log.i("StackSites", "Server value background= " + server);
+                } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
 
@@ -112,7 +118,10 @@ public class MensajesActivity extends  AppCompatActivity {
             //setup our Adapter and set it to the ListView.
             mAdapter = new AdaptadorClass(MensajesActivity.this, -1, GatvXmlParser.getStackSitesFromFile(MensajesActivity.this));
             entryListMensajes.setAdapter(mAdapter);
-            Log.i("StackSites", "adapter size = " + mAdapter.getCount());
+            Log.i("StackSites", "Server value onPostExecute = " + server);
+            if (!server){
+                displayAlert();
+            }
         }
     }
 
@@ -123,7 +132,7 @@ public class MensajesActivity extends  AppCompatActivity {
         //Add your data to bundle
         bundle.putString("img_msg", img_msg);
         bundle.putString("txt",txt);
-        bundle.putString("title",title);
+        bundle.putString("title", title);
 
         //Add the bundle to the intent
 
@@ -134,11 +143,29 @@ public class MensajesActivity extends  AppCompatActivity {
 
     public  void refreshButton(){
         Intent intent = getIntent();
-        //overridePendingTransition(android.R.anim.cycle_interpolator, android.R.anim.cycle_interpolator);
+        overridePendingTransition(android.R.anim.cycle_interpolator, android.R.anim.cycle_interpolator);
         //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         finish();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         startActivity(intent);
+    }
+
+    private void displayAlert(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("No ha sido posible cargar la lista de mensajes. Posible servidor caido");
+        alertDialogBuilder.setTitle("ERROR");
+        alertDialogBuilder.setIcon(R.drawable.ic_action_warning);
+        alertDialogBuilder.setNegativeButton("OK",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                overridePendingTransition(android.R.anim.cycle_interpolator, android.R.anim.cycle_interpolator);
+                finish();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
     }
 
 

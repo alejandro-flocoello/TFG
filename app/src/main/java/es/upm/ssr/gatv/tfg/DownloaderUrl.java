@@ -1,5 +1,6 @@
 package es.upm.ssr.gatv.tfg;
 
+import android.content.Intent;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -17,7 +18,7 @@ public class DownloaderUrl {
 
     //Tag for Log statements
     private static String myTag = "XmlStack";
-
+    static Boolean server = new Boolean(true);
     //Handler msg that represents we are posting a progress update.
     static final int POST_PROGRESS = 1;
 
@@ -32,7 +33,7 @@ public class DownloaderUrl {
 
             URL url = new URL(URL); //URL of the file
 
-            //keep the start time so we can display how long it took to the Log.
+                        //keep the start time so we can display how long it took to the Log.
             long startTime = System.currentTimeMillis();
             Log.d(myTag, "Comienzo de descarga");
 			
@@ -79,8 +80,17 @@ public class DownloaderUrl {
             Log.d(myTag, "download ready in "
                     + ((System.currentTimeMillis() - startTime))
                     + " milisec");
+            server = true;
         } catch (IOException e) {
             Log.d(myTag, "Error: " + e);
+            server = false;
         }
     }
+        public static boolean setServer(){
+            if (server = true){
+           return true; }else{
+                return false;
+            }
+
+        }
 }

@@ -1,66 +1,59 @@
 package es.upm.ssr.gatv.tfg;
 
-import java.util.HashMap;
-import java.util.Locale;
 
+import java.util.Locale;
 import android.content.Context;
-import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.util.Log;
+import android.widget.Button;
 
-public class SpeakVoiceClass implements OnInitListener {
+
+public class SpeakVoiceClass  implements OnInitListener{
+
 
     private TextToSpeech tts;
-
-    private boolean ready = false;
-
-    private boolean allowed = false;
+    private Button btnSpeak;
+    private String messageText;
 
     public SpeakVoiceClass(Context context){
         tts = new TextToSpeech(context, this);
     }
 
-    public boolean isAllowed(){
-        return allowed;
-    }
-
-    public void allow(boolean allowed){
-        this.allowed = allowed;
-    }
-
-    @Override
     public void onInit(int status) {
-        if(status == TextToSpeech.SUCCESS){
-            // Change this to match your
-            // locale
-            tts.setLanguage(Locale.US);
-            ready = true;
-        }else{
-            ready = false;
+
+        if ( status == TextToSpeech.SUCCESS ) {
+
+            //establece idioma por defecto, en este caso el idioma es español
+            int result = tts.setLanguage( Locale.getDefault() );
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                btnSpeak.setEnabled(false);
+
+                Log.e("TTS", "El idioma no está soportado");
+            } else {
+                btnSpeak.setEnabled(true);
+
+            }
+
+        } else {
+            Log.e("TTS", "Inicialización fallida!");
         }
     }
 
-    public void speak(String text){
+    public void sintetiza(String texto) {
+        tts.speak( texto, TextToSpeech.QUEUE_FLUSH, null );
+        Log.e("TTS", "Sintetización de voz en curso ...");
+    }
 
-        // Speak only if the TTS is ready
-        // and the user has allowed speech
+    //Cuando se cierra la aplicacion se destruye el TTS
 
-        if(ready && allowed) {
-            HashMap<String, String> hash = new HashMap<String,String>();
-            hash.put(TextToSpeech.Engine.KEY_PARAM_STREAM,
-                    String.valueOf(AudioManager.STREAM_NOTIFICATION));
-            String utteranceId=this.hashCode() + "";
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, hash);
+    protected void onDestroy() {
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
         }
     }
 
-    public void pause(int duration){
-        tts.playSilence(duration, TextToSpeech.QUEUE_ADD, null);
-    }
-
-    // Free up resources
-    public void destroy(){
-        tts.shutdown();
-    }
 
 }
