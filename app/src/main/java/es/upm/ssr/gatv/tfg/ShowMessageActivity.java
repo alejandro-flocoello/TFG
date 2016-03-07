@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -83,6 +84,7 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
             ImageLoader imageLoader = ImageLoader.getInstance();
             ImageView messageImg = (ImageView)findViewById(R.id.messageImg);
             TextView messageText = (TextView) findViewById(R.id.messageText);
+            messageText.setMovementMethod(new ScrollingMovementMethod());
             imageLoader.displayImage(urlString, messageImg);
             messageText.setText(txt);
             SharedPreferences sharedPrefs = PreferenceManager
@@ -125,7 +127,7 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
 
 
     private void sintetiza( String texto ) {
-        tts.speak( texto, TextToSpeech.QUEUE_FLUSH, null );
+        tts.speak( texto, TextToSpeech.QUEUE_ADD, null );
         Log.e("TTS", "Dime algo");
     }
 

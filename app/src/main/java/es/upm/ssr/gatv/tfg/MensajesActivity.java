@@ -144,9 +144,9 @@ public class MensajesActivity extends  AppCompatActivity{
     public  void refreshButton(){
         Intent intent = getIntent();
         overridePendingTransition(android.R.anim.cycle_interpolator, android.R.anim.cycle_interpolator);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         finish();
-        //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         startActivity(intent);
     }
 

@@ -32,7 +32,7 @@ public class VideosActivity extends  AppCompatActivity {
 
     private AdaptadorClass mAdapter;
     private ListView entryList;
-    public boolean server;
+
 
 
 
