@@ -175,7 +175,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
-                || SintetizadorVozPreferenceFragment.class.getName().equals(fragmentName);
+                || VozPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -277,7 +277,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class SintetizadorVozPreferenceFragment extends PreferenceFragment {
+    public static class VozPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
