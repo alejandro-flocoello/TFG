@@ -4,11 +4,16 @@ package es.upm.ssr.gatv.tfg;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -20,6 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -73,9 +79,10 @@ public class AdaptadorClass extends ArrayAdapter<Entry> {
         TextView aboutTxt = (TextView)row.findViewById(R.id.aboutTxt);
         final ProgressBar indicator = (ProgressBar)row.findViewById(R.id.progress);
 
-        //Initially we want the progress indicator visible, and the image invisible
-        indicator.setVisibility(View.VISIBLE);
-        iconImg.setVisibility(View.INVISIBLE);
+
+
+
+
 
         //Setup a listener we can use to swtich from the loading indicator to the Image once it's ready
         ImageLoadingListener listener = new ImageLoadingListener(){
@@ -102,8 +109,31 @@ public class AdaptadorClass extends ArrayAdapter<Entry> {
             }
         };
 
-        //Load the image and use our options so caching is handled.
-        imageLoader.displayImage(getItem(pos).getImgUrl(),iconImg , options,listener);
+
+
+
+
+        if ((getItem(pos).getImgUrl()) != null) {
+
+            //Initially we want the progress indicator visible, and the image invisible
+            indicator.setVisibility(View.VISIBLE);
+            iconImg.setVisibility(View.INVISIBLE);
+
+            //Load the image and use our options so caching is handled.
+            imageLoader.displayImage(getItem(pos).getImgUrl(), iconImg, options, listener);
+            String imgUrl  = getItem(pos).getImgUrl();
+            Log.i("EntrySites", "getView imgUrl  = " + imgUrl);
+        }
+        else if((getItem(pos).getLink()) != null){
+
+            Bitmap imgBitmap = retrieveVideoFrameFromVideo(getItem(pos).getLink().toString());
+
+            final Bitmap thumbnail = ThumbnailUtils.extractThumbnail(imgBitmap,80,80);
+            iconImg.setImageBitmap(thumbnail);
+            //iconImg.setScaleType(ImageView.ScaleType.FIT_XY);
+            String imgLink  = getItem(pos).getLink();
+            Log.i("EntrySites", "getView imgLink  = " + imgLink);
+        }
 
         //Set the relavent text in our TextViews
         nameTxt.setText(getItem(pos).getTitle());
@@ -116,6 +146,31 @@ public class AdaptadorClass extends ArrayAdapter<Entry> {
 
     }
 
+    public static Bitmap retrieveVideoFrameFromVideo(String videoPath)
+    {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever mediaMetadataRetriever = null;
+        try
+        {
+            mediaMetadataRetriever = new MediaMetadataRetriever();
+            if (Build.VERSION.SDK_INT >= 14)
+                mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
+            else
+                mediaMetadataRetriever.setDataSource(videoPath);
+            //   mediaMetadataRetriever.setDataSource(videoPath);
+            bitmap = mediaMetadataRetriever.getFrameAtTime();
+        }
+        catch (Exception e)
+        {  e.printStackTrace();}
+        finally
+        {
+            if (mediaMetadataRetriever != null)
+            {
+                mediaMetadataRetriever.release();
+            }
+        }
+        return bitmap;
+    }
 
 }
 

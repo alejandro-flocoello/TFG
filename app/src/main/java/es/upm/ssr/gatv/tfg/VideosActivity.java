@@ -104,7 +104,7 @@ public class VideosActivity extends  AppCompatActivity {
     protected Void doInBackground(Void... arg0) {
         //Download the file
         try {
-            DownloaderUrl.DownloadFromUrl("http://138.4.47.33:2103/afc/home/Mensajes/Contenido/mensajes.xml", openFileOutput("Mensajes.xml", Context.MODE_PRIVATE));
+            DownloaderUrl.DownloadFromUrl("http://138.4.47.33:2103/afc/home/Mensajes/Contenido/videos.xml", openFileOutput("Mensajes.xml", Context.MODE_PRIVATE));
             server = DownloaderUrl.setServer();
             Log.i("StackSites", "Server value background= " + server);
         } catch (FileNotFoundException e) {
