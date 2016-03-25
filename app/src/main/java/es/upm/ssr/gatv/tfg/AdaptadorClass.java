@@ -67,83 +67,86 @@ public class AdaptadorClass extends ArrayAdapter<Entry> {
     public View getView(int pos, View convertView, ViewGroup parent){
         RelativeLayout row = (RelativeLayout)convertView;
         Log.i("EntrySites", "getView pos = " + pos);
-        if(null == row){
-            //No recycled View, we have to inflate one.
-            LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = (RelativeLayout)inflater.inflate(R.layout.row_site, null);
-        }
-
-        //Get our View References
-        final ImageView iconImg = (ImageView)row.findViewById(R.id.iconImg);
-        TextView nameTxt = (TextView)row.findViewById(R.id.nameTxt);
-        TextView aboutTxt = (TextView)row.findViewById(R.id.aboutTxt);
-        final ProgressBar indicator = (ProgressBar)row.findViewById(R.id.progress);
-
-
-
-
-
-
-        //Setup a listener we can use to swtich from the loading indicator to the Image once it's ready
-        ImageLoadingListener listener = new ImageLoadingListener(){
-
-            @Override
-            public void onLoadingStarted(String arg0, View arg1) {
-                // TODO Auto-generated method stub
-
-            }
-            @Override
-            public void onLoadingCancelled(String arg0, View arg1) {
-                // TODO Auto-generated method stub
-            }
-            @Override
-            public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
-                indicator.setVisibility(View.INVISIBLE);
-                iconImg.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
-                // TODO Auto-generated method stub
-
-            }
-        };
-
-
-
 
 
         if ((getItem(pos).getImgUrl()) != null) {
+
+            if(null == row){
+                //No recycled View, we have to inflate one.
+                LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                row = (RelativeLayout)inflater.inflate(R.layout.row_site, parent,false);
+            }
+
+            //Get our View References
+            final ImageView iconImg = (ImageView)row.findViewById(R.id.iconImg);
+            TextView nameTxt = (TextView)row.findViewById(R.id.nameTxt);
+            TextView aboutTxt = (TextView)row.findViewById(R.id.aboutTxt);
+            final ProgressBar indicator = (ProgressBar)row.findViewById(R.id.progress);
 
             //Initially we want the progress indicator visible, and the image invisible
             indicator.setVisibility(View.VISIBLE);
             iconImg.setVisibility(View.INVISIBLE);
 
+            //Setup a listener we can use to swtich from the loading indicator to the Image once it's ready
+            ImageLoadingListener listener = new ImageLoadingListener(){
+
+                @Override
+                public void onLoadingStarted(String arg0, View arg1) {
+                    // TODO Auto-generated method stub
+
+                }
+                @Override
+                public void onLoadingCancelled(String arg0, View arg1) {
+                    // TODO Auto-generated method stub
+                }
+                @Override
+                public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+                    indicator.setVisibility(View.INVISIBLE);
+                    iconImg.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+                    // TODO Auto-generated method stub
+
+                }
+            };
+
             //Load the image and use our options so caching is handled.
             imageLoader.displayImage(getItem(pos).getImgUrl(), iconImg, options, listener);
+
+            nameTxt.setText(getItem(pos).getTitle());
+            aboutTxt.setText(getItem(pos).getSummary());
             String imgUrl  = getItem(pos).getImgUrl();
             Log.i("EntrySites", "getView imgUrl  = " + imgUrl);
         }
         else if((getItem(pos).getLink()) != null){
 
-            Bitmap imgBitmap = retrieveVideoFrameFromVideo(getItem(pos).getLink().toString());
+            if(null == row){
+                //No recycled View, we have to inflate one.
+                LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                row = (RelativeLayout)inflater.inflate(R.layout.row_site_video, parent,false);
+            }
 
-            final Bitmap thumbnail = ThumbnailUtils.extractThumbnail(imgBitmap,80,80);
+            //Get our View References
+            final ImageView iconImg = (ImageView)row.findViewById(R.id.iconImg);
+            TextView nameTxt = (TextView)row.findViewById(R.id.nameTxt);
+            TextView aboutTxt = (TextView)row.findViewById(R.id.aboutTxt);
+            final ProgressBar indicator = (ProgressBar)row.findViewById(R.id.progress);
+
+            Bitmap imgBitmap = retrieveVideoFrameFromVideo(getItem(pos).getLink());
+            Bitmap thumbnail = ThumbnailUtils.extractThumbnail(imgBitmap,150,150);
             iconImg.setImageBitmap(thumbnail);
-            //iconImg.setScaleType(ImageView.ScaleType.FIT_XY);
+            nameTxt.setText(getItem(pos).getTitle());
+            aboutTxt.setText(getItem(pos).getSummary());
+
             String imgLink  = getItem(pos).getLink();
             Log.i("EntrySites", "getView imgLink  = " + imgLink);
+
+            indicator.setVisibility(View.INVISIBLE);
         }
 
-        //Set the relavent text in our TextViews
-        nameTxt.setText(getItem(pos).getTitle());
-        aboutTxt.setText(getItem(pos).getSummary());
-
-
-
         return row;
-
-
     }
 
     public static Bitmap retrieveVideoFrameFromVideo(String videoPath)
