@@ -12,29 +12,53 @@
     tools:context="es.upm.ssr.gatv.tfg.ShowMessageActivity"
     tools:showIn="@layout/activity_show_message">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/messageText"
-        android:maxLines = "500"
-        android:scrollbars = "vertical"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="50dp"
-        android:textSize="20sp"/>
-
-    <ImageView
-        android:id="@+id/messageImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/messageText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:layout_marginLeft="15dp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ESCUCHAR"
-        android:id="@+id/btnSpeak"/>
+        android:id="@+id/btnSpeak"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CLIP DE AUDIO"
+        android:id="@+id/btnClipAudio"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/btnSpeak" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIDEO ADJUNTO"
+        android:id="@+id/btnVideoAdd"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/btnClipAudio" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/messageImg"
+        android:layout_below="@+id/btnSpeak"
+        android:layout_alignEnd="@+id/btnSpeak"
+        android:layout_toLeftOf="@+id/btnSpeak"
+        android:layout_marginLeft="50dp"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Texto"
+        android:id="@+id/messageText"
+        android:textAlignment="gravity"
+        android:paddingTop="20dp"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_below="@+id/btnSpeak"
+        android:layout_toStartOf="@+id/messageImg"
+        android:gravity="fill_horizontal"
+        android:layout_alignParentLeft="true" />
+
+
+
 </RelativeLayout>
