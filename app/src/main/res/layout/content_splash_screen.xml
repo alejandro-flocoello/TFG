@@ -16,9 +16,19 @@
         android:layout_width="800dp"
         android:layout_height="match_parent"
         android:id="@+id/imageView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:baselineAlignBottom="true"
         android:src="@drawable/logo_gatv"
-        android:contentDescription="@string/bckground_img" />
+        android:contentDescription="@string/bckground_img"
+        android:layout_marginTop="353dp"
+        android:layout_alignTop="@+id/textSplashView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/textSplashView"
+        android:textColor="#ffffff"
+        android:textSize="80dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
