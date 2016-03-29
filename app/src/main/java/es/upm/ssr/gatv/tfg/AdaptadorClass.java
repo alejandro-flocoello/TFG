@@ -160,8 +160,7 @@ public class AdaptadorClass extends ArrayAdapter<Entry> {
                 mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
             else
                 mediaMetadataRetriever.setDataSource(videoPath);
-            //   mediaMetadataRetriever.setDataSource(videoPath);
-            bitmap = mediaMetadataRetriever.getFrameAtTime();
+                bitmap = mediaMetadataRetriever.getFrameAtTime();
         }
         catch (Exception e)
         {  e.printStackTrace();}

@@ -27,7 +27,7 @@ package es.upm.ssr.gatv.tfg;
 
         import java.io.FileNotFoundException;
 
-        import es.upm.ssr.gatv.tfg.Entry;
+
 
 public class MensajesActivity extends  AppCompatActivity{
 
@@ -53,7 +53,9 @@ public class MensajesActivity extends  AppCompatActivity{
                 String img_msg = mAdapter.getItem(pos).getImgMsgUrl();
                 String txt = mAdapter.getItem(pos).getSummary();
                 String title = mAdapter.getItem(pos).getTitle();
-                showMensaje(img_msg,txt,title);
+                String audio = mAdapter.getItem(pos).getAudioUrl();
+                String videoAdd = mAdapter.getItem(pos).getLink();
+                showMensaje(img_msg,txt,title,videoAdd,audio);
 //                Intent i = new Intent(Intent.ACTION_VIEW);
 //                i.setData(Uri.parse(url));
 //                startActivity(i);
@@ -125,7 +127,7 @@ public class MensajesActivity extends  AppCompatActivity{
         }
     }
 
-    public void showMensaje(String img_msg , String txt , String title) {
+    public void showMensaje(String img_msg , String txt , String title, String videoAdd , String audio) {
         // Do something in response to button Mensajes
         Bundle bundle = new Bundle();
 
@@ -133,6 +135,8 @@ public class MensajesActivity extends  AppCompatActivity{
         bundle.putString("img_msg", img_msg);
         bundle.putString("txt",txt);
         bundle.putString("title", title);
+        bundle.putString("clip_audio",audio);
+        bundle.putString("video_add",videoAdd);
 
         //Add the bundle to the intent
 

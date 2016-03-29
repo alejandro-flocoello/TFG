@@ -9,6 +9,7 @@ public class Entry {
     private String title;
     private String link;
     private String summary;
+    private String audio;
     private String imgUrl;
     private String imgMsgUrl;
 
@@ -40,9 +41,11 @@ public class Entry {
         return imgMsgUrl;
     }
     public void setImgMsgUrl(String imgMsgUrl){this.imgMsgUrl = imgMsgUrl;}
+    public String getAudioUrl(){return audio;}
+    public void setAudioUrl(String audio){this.audio = audio;}
     @Override
     public String toString() {
         return "Entry [title=" + title + ", link=" + link + ", summary="
-                + summary + ", imgUrl=" + imgUrl + ", imgMsgUrl=" + imgMsgUrl + "]";
+                + summary + ", imgUrl=" + imgUrl + ", imgMsgUrl=" + imgMsgUrl + ", audioUrl=" + audio + "]";
     }
 }

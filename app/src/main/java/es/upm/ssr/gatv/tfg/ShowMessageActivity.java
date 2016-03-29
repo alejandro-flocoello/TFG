@@ -1,5 +1,6 @@
 package es.upm.ssr.gatv.tfg;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,7 +23,6 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-
 import java.net.URL;
 import java.util.Locale;
 
@@ -60,7 +60,9 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
         String img_msg = bundle.getString("img_msg");
         String txt = bundle.getString("txt");
         String title = bundle.getString("title");
-        cargaMensajes(img_msg, txt);
+        String clip_audio = bundle.getString("clip_audio");
+        String video_add = bundle.getString("video_add");
+        cargaMensajes(title, img_msg, txt, clip_audio, video_add);
 
         messageText = txt.toString();
         btnSpeak = (Button) findViewById(R.id.btnSpeak);
@@ -77,13 +79,37 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void cargaMensajes(String urlString, String txt){
+    public void cargaMensajes(final String title,final String urlString, String txt, String clipAudio,final String videoAdd){
 
         try {
 
             ImageLoader imageLoader = ImageLoader.getInstance();
             ImageView messageImg = (ImageView)findViewById(R.id.messageImg);
             TextView messageText = (TextView) findViewById(R.id.messageText);
+
+            Button btnClipAudio = (Button) findViewById(R.id.btnClipAudio);
+            Button btnVideoAdd = (Button) findViewById(R.id.btnVideoAdd);
+            //Button btnSpeak = (Button) findViewById(R.id.btnSpeak);
+
+            if(clipAudio != null){btnClipAudio.setVisibility(View.VISIBLE);}
+            else{btnClipAudio.setVisibility(View.INVISIBLE);}
+
+            if(videoAdd != null){
+                btnVideoAdd.setVisibility(View.VISIBLE);
+                btnVideoAdd.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        playVideo(videoAdd,title);
+                    }
+
+                });
+
+
+            }
+            else{btnVideoAdd.setVisibility(View.INVISIBLE);}
+
+
             messageText.setMovementMethod(new ScrollingMovementMethod());
             imageLoader.displayImage(urlString, messageImg);
             messageText.setText(txt);
@@ -101,6 +127,20 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
 
     }
 
+    public void playVideo(String url, String title) {
+        // Do something in response to button Videos
+        Bundle bundle = new Bundle();
+
+        //Add your data to bundle
+        bundle.putString("url", url);
+        bundle.putString("title", title);
+
+        //Add the bundle to the intent
+
+        Intent intent = new Intent(this, VideoPlayerActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 
     //Inicia TTS
     @Override

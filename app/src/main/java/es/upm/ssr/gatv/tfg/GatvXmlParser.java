@@ -18,6 +18,7 @@ public class GatvXmlParser {
     static final String KEY_TITLE = "title";
     static final String KEY_LINK = "link";
     static final String KEY_SUMMARY = "summary";
+    static final String KEY_AUDIO = "audio";
     static final String KEY_IMAGE_URL = "image";
     static final String KEY_IMAGE_MSG_URL = "imagemsg";
 
@@ -87,7 +88,11 @@ public class GatvXmlParser {
                         } else if (tagname.equalsIgnoreCase(KEY_IMAGE_MSG_URL)) {
                             // if </image> use setImgUrl() on curSite
                             curStackSite.setImgMsgUrl(curText);
-                        }
+                        } else if (tagname.equalsIgnoreCase(KEY_AUDIO)) {
+                           // if </audio> use setImgUrl() on curSite
+                            curStackSite.setAudioUrl(curText);
+
+                }
                         break;
 
                     default:
