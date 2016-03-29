@@ -10,25 +10,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.upm.ssr.gatv.tfg.SplashScreen"
     tools:showIn="@layout/activity_splash_screen"
-    android:background="#2c14c9">
+    android:background="#0080C0">
 
     <ImageView
-        android:layout_width="800dp"
-        android:layout_height="match_parent"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:id="@+id/imageView"
         android:baselineAlignBottom="true"
-        android:src="@drawable/logo_gatv"
+        android:src="@drawable/circulo_gatv"
+        android:focusable="true"
         android:contentDescription="@string/bckground_img"
-        android:layout_marginTop="353dp"
-        android:layout_alignTop="@+id/textSplashView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="150dp"
+        android:layout_alignParentLeft="false" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="800dp"
+        android:layout_height="wrap_content"
         android:id="@+id/textSplashView"
         android:textColor="#ffffff"
-        android:textSize="80dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/imageView"
+        android:layout_marginBottom="100dp"
+        android:textAlignment="center"
+        android:capitalize="words"
+        android:singleLine="false"
+        android:typeface="sans"
+        android:background="@drawable/border" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/imageView2"
+        android:src="@drawable/android_icon"
+        android:contentDescription="android_icon"
+        android:layout_above="@+id/textSplashView"
+        android:layout_alignEnd="@+id/textSplashView" />
 </RelativeLayout>

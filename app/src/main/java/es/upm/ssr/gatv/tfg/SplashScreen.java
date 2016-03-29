@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TextView;
+import android.graphics.Matrix;
+import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,6 +25,7 @@ public class SplashScreen extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        cargaInicioPrefs();
         splashTimer = new Timer();
         splashTimer.schedule(new TimerTask()
         {
