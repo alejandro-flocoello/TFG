@@ -2,6 +2,7 @@ package es.upm.ssr.gatv.tfg;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -9,12 +10,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +31,89 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final Drawable d = getResources().getDrawable(R.drawable.border);
+        final ImageButton juegos_btn = (ImageButton) findViewById(R.id.buttonJuegos);
+        final ImageButton ajustes_btn = (ImageButton) findViewById(R.id.buttonAjustes);
+        final ImageButton videocnf_btn = (ImageButton) findViewById(R.id.buttonVideoconferencia);
+        final ImageButton videos_btn = (ImageButton) findViewById(R.id.buttonVideos);
+        final ImageButton mensajes_btn = (ImageButton) findViewById(R.id.buttonMensajes);
+        final ImageButton alarma_btn = (ImageButton) findViewById(R.id.buttonAlarma);
+
+
+
+        juegos_btn.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN){
+                        juegos_btn.setBackground(null);
+                }else if(event.getAction() == KeyEvent.ACTION_UP){
+                       juegos_btn.setBackground(d);
+                }
+
+            return false;}
+        });
+
+        ajustes_btn.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN){
+                    ajustes_btn.setBackground(null);
+                }else if(event.getAction() == KeyEvent.ACTION_UP){
+                    ajustes_btn.setBackground(d);
+                }
+
+                return false;}
+        });
+
+        videocnf_btn.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN){
+                    videocnf_btn.setBackground(null);
+                }else if(event.getAction() == KeyEvent.ACTION_UP){
+                    videocnf_btn.setBackground(d);
+                }
+
+                return false;}
+        });
+
+        videos_btn.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    videos_btn.setBackground(null);
+                } else if (event.getAction() == KeyEvent.ACTION_UP) {
+                    videos_btn.setBackground(d);
+                }
+
+                return false;
+            }
+        });
+
+        mensajes_btn.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN){
+                    mensajes_btn.setBackground(null);
+                }else if(event.getAction() == KeyEvent.ACTION_UP){
+                    mensajes_btn.setBackground(d);
+                }
+
+                return false;}
+        });
+
+        alarma_btn.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN){
+                    alarma_btn.setBackground(null);
+                }else if(event.getAction() == KeyEvent.ACTION_UP){
+                    alarma_btn.setBackground(d);
+                }
+
+                return false;}
+        });
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -35,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Oh, este botón no tiene ninguna función asignada.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                }
+            }
         });
     }
 

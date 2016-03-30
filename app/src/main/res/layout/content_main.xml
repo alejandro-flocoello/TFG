@@ -10,77 +10,89 @@
     android:paddingTop="80dp">
 
 
-    <Button
-            android:text="@string/Videoconferencia"
-            android:id="@+id/buttonVideoconferencia"
-            android:drawableBottom="@drawable/ic_action_users"
-            android:onClick="muestraVideoConferencia"
-            android:textSize="30sp"
-            android:layout_width="450dp"
-            android:layout_height="400dp"
-            android:layout_gravity="center"
-             android:layout_marginTop="200dp" />
+    <ImageButton
+        android:text="@string/Videoconferencia"
+        android:id="@+id/buttonVideoconferencia"
+        android:onClick="muestraVideoConferencia"
+        android:textSize="30sp"
+        android:background="@drawable/border_icon"
+        android:layout_width="450dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:src="@drawable/videoconf_btn"
+        android:scaleType="centerCrop" />
 
-    <Button
+    <ImageButton
         android:layout_width="450dp"
         android:layout_height="400dp"
         android:id="@+id/buttonAjustes"
         android:text="@string/Ajustes"
+        android:scaleType="centerCrop"
         android:onClick="muestraAjustes"
         android:textSize="30sp"
-        android:layout_gravity="center"
+        android:background="@drawable/border_icon"
         android:layout_marginBottom="200dp"
         android:drawingCacheQuality="high"
         android:duplicateParentState="false"
-        android:editable="false"
-        android:drawableBottom="@drawable/ic_settings" />
+        android:layout_gravity="center"
+        android:src="@drawable/ajustes_btn"/>
 
-    <Button
+    <ImageButton
         android:layout_width="450dp"
         android:layout_height="400dp"
         android:text="@string/Videos"
         android:id="@+id/buttonVideos"
-        android:drawableBottom="@drawable/ic_videos"
         android:onClick="muestraVideos"
         android:textSize="30sp"
+        android:background="@drawable/border_icon"
         android:layout_gravity="center"
         android:layout_marginRight="450dp"
-        android:layout_marginBottom="200dp" />
+        android:src="@drawable/videos_btn"
+        android:layout_marginBottom="200dp"
+        android:scaleType="centerCrop" />
 
-    <Button
+    <ImageButton
         android:layout_width="450dp"
         android:layout_height="400dp"
         android:text="@string/Alarma"
         android:id="@+id/buttonAlarma"
-        android:drawableBottom="@drawable/ic_action_alarm"
         android:onClick="muestraAlarma"
         android:textSize="30sp"
+        android:background="@drawable/border_icon"
         android:layout_gravity="center"
         android:layout_marginRight="450dp"
-        android:layout_marginTop="200dp" />
+        android:src="@drawable/alarm_btn"
+        android:layout_marginTop="200dp"
+        android:scaleType="centerCrop" />
 
-    <Button
+    <ImageButton
         android:layout_width="450dp"
         android:layout_height="400dp"
         android:text="@string/Mensajes"
         android:id="@+id/buttonMensajes"
-        android:drawableBottom="@drawable/ic_action_gmail"
         android:onClick="muestraMensajes"
         android:textSize="30sp"
+        android:src="@drawable/mensajes_btn"
+        android:background="@drawable/border_icon"
         android:layout_gravity="center"
         android:layout_marginLeft="450dp"
-        android:layout_marginBottom="200dp" />
+        android:layout_marginBottom="200dp"
+        android:scaleType="centerCrop" />
 
-    <Button
+    <ImageButton
         android:text="@string/Juegos"
         android:id="@+id/buttonJuegos"
-        android:drawableBottom="@drawable/ic_action_knight"
+        android:drawableBottom="@drawable/border_icon"
         android:onClick="muestraJuegos"
         android:textSize="30sp"
         android:layout_width="450dp"
         android:layout_gravity="center"
         android:layout_height="400dp"
         android:layout_marginLeft="450dp"
-        android:layout_marginTop="200dp" />
+        android:layout_marginTop="200dp"
+        android:src="@drawable/juegos_btn"
+        android:scaleType="centerCrop"
+        android:background="#ffffff" />
 
 </FrameLayout>
