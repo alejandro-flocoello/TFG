@@ -39,11 +39,13 @@
         android:background="@drawable/border" />
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/imageView2"
         android:src="@drawable/android_icon"
         android:contentDescription="android_icon"
         android:layout_above="@+id/textSplashView"
-        android:layout_alignEnd="@+id/textSplashView" />
+        android:layout_alignEnd="@+id/textSplashView"
+        android:layout_alignParentBottom="false"
+        android:layout_marginBottom="50dp" />
 </RelativeLayout>

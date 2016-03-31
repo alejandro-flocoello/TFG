@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +33,18 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final Drawable d = getResources().getDrawable(R.drawable.border);
+        final Drawable d = getResources().getDrawable(R.drawable.border_icon_2);
+        final Drawable u = getResources().getDrawable(R.drawable.border_icon_4);
+
+        final TextView juegos_text = (TextView) findViewById(R.id.textMenuJuegos);
+        final TextView videos_text = (TextView) findViewById(R.id.textMenuVideos);
+        final TextView videocnf_text = (TextView) findViewById(R.id.textMenuVideoConf);
+        final TextView alarma_text = (TextView) findViewById(R.id.textMenuAlarma);
+        final TextView mensajes_text = (TextView) findViewById(R.id.textMenuMensajes);
+        final TextView ajustes_text = (TextView) findViewById(R.id.textMenuSettings);
+
+
+
         final ImageButton juegos_btn = (ImageButton) findViewById(R.id.buttonJuegos);
         final ImageButton ajustes_btn = (ImageButton) findViewById(R.id.buttonAjustes);
         final ImageButton videocnf_btn = (ImageButton) findViewById(R.id.buttonVideoconferencia);
@@ -45,9 +58,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN){
-                        juegos_btn.setBackground(null);
+                        juegos_btn.setBackground(u);
+                        juegos_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
                 }else if(event.getAction() == KeyEvent.ACTION_UP){
-                       juegos_btn.setBackground(d);
+                        juegos_btn.setBackground(d);
+                        juegos_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+
                 }
 
             return false;}
@@ -57,9 +73,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN){
-                    ajustes_btn.setBackground(null);
+                    ajustes_btn.setBackground(u);
+                    ajustes_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
                 }else if(event.getAction() == KeyEvent.ACTION_UP){
                     ajustes_btn.setBackground(d);
+                    ajustes_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
                 }
 
                 return false;}
@@ -69,9 +87,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN){
-                    videocnf_btn.setBackground(null);
+                    videocnf_btn.setBackground(u);
+                    videocnf_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
                 }else if(event.getAction() == KeyEvent.ACTION_UP){
                     videocnf_btn.setBackground(d);
+                    videocnf_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
                 }
 
                 return false;}
@@ -81,9 +101,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    videos_btn.setBackground(null);
+                    videos_btn.setBackground(u);
+                    videos_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
                     videos_btn.setBackground(d);
+                    videos_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
                 }
 
                 return false;
@@ -94,9 +116,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN){
-                    mensajes_btn.setBackground(null);
+                    mensajes_btn.setBackground(u);
+                    mensajes_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
                 }else if(event.getAction() == KeyEvent.ACTION_UP){
                     mensajes_btn.setBackground(d);
+                    mensajes_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
                 }
 
                 return false;}
@@ -106,9 +130,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN){
-                    alarma_btn.setBackground(null);
+                    alarma_btn.setBackground(u);
+                    alarma_text.setTextSize(TypedValue.COMPLEX_UNIT_SP,28);
                 }else if(event.getAction() == KeyEvent.ACTION_UP){
                     alarma_btn.setBackground(d);
+                    alarma_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
                 }
 
                 return false;}
