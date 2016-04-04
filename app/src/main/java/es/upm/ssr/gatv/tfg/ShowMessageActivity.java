@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,7 +33,12 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
     public static final String DEBUG_MENSAJES = "ShowMessage" ;
     private TextToSpeech tts;
     private Button btnSpeak;
+    private Button btnReproduce;
+    private Button btnStop;
+    private Button btnPausa;
+    private Button btnVideoAdd;
     private String messageText;
+    private MediaPlayer mediaPlayer;
 
 
     @Override
@@ -62,10 +69,17 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
         String title = bundle.getString("title");
         String clip_audio = bundle.getString("clip_audio");
         String video_add = bundle.getString("video_add");
+
+        btnReproduce = (Button) findViewById(R.id.buttonReproduccion);
+        btnVideoAdd = (Button) findViewById(R.id.btnVideoAdd);
+        btnStop = (Button) findViewById(R.id.buttonStop);
+        btnSpeak = (Button) findViewById(R.id.btnSpeak);
+        btnPausa = (Button) findViewById(R.id.buttonPausa);
+
+
         cargaMensajes(title, img_msg, txt, clip_audio, video_add);
 
         messageText = txt.toString();
-        btnSpeak = (Button) findViewById(R.id.btnSpeak);
         btnSpeak.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -74,25 +88,67 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
             }
 
         });
+        btnStop.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                mediaPlayer.stop();
+                mediaPlayer = null;
+                btnReproduce.setEnabled(true);
+                btnPausa.setEnabled(false);
+                btnStop.setEnabled(false);
+            }
+
+        });
+
+
+        btnPausa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Pausing sound",Toast.LENGTH_SHORT).show();
+                mediaPlayer.pause();
+                Log.d(DEBUG_MENSAJES, "isPlaying() : " + mediaPlayer.isPlaying());
+                btnStop.setEnabled(false);
+                btnReproduce.setEnabled(true);
+                btnPausa.setEnabled(false);
+            }
+        });
+
+
 
         setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void cargaMensajes(final String title,final String urlString, String txt, String clipAudio,final String videoAdd){
+    public void cargaMensajes(final String title,final String urlString, String txt, final String clipAudio,final String videoAdd){
 
         try {
 
             ImageLoader imageLoader = ImageLoader.getInstance();
             ImageView messageImg = (ImageView)findViewById(R.id.messageImg);
             TextView messageText = (TextView) findViewById(R.id.messageText);
+            TextView textClipAudio = (TextView) findViewById(R.id.textClipAudio);
 
-            Button btnClipAudio = (Button) findViewById(R.id.btnClipAudio);
-            Button btnVideoAdd = (Button) findViewById(R.id.btnVideoAdd);
             //Button btnSpeak = (Button) findViewById(R.id.btnSpeak);
 
-            if(clipAudio != null){btnClipAudio.setVisibility(View.VISIBLE);}
-            else{btnClipAudio.setVisibility(View.INVISIBLE);}
+            if(clipAudio != null){
+                btnReproduce.setVisibility(View.VISIBLE);
+                btnReproduce.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        reproduceAudio(clipAudio);
+                        btnReproduce.setEnabled(false);
+                        btnStop.setEnabled(true);
+                        btnPausa.setEnabled(true);
+                    }
+
+                });}
+            else{btnReproduce.setVisibility(View.INVISIBLE);
+                btnStop.setVisibility(View.INVISIBLE);
+                btnPausa.setVisibility(View.INVISIBLE);
+                textClipAudio.setVisibility(View.INVISIBLE);
+            }
 
             if(videoAdd != null){
                 btnVideoAdd.setVisibility(View.VISIBLE);
@@ -182,4 +238,30 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
         }
         super.onDestroy();
     }
+
+    public void reproduceAudio(String urlString){
+
+        try {
+
+            Log.d(DEBUG_MENSAJES, "mediaPlayer : " + mediaPlayer);
+
+            if(mediaPlayer == null ) {
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer.setDataSource(urlString);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+            }else{
+                mediaPlayer.start();
+                Log.d(DEBUG_MENSAJES, "isPlaying() : " + mediaPlayer.isPlaying());
+            }
+
+            Log.d(DEBUG_MENSAJES, "Reproduccion en marcha");
+        } catch (Exception e){
+            // TODO: handle exception
+            Log.d(DEBUG_MENSAJES, "Error en la reproduccion");
+            Toast.makeText(this, "Error al reproducir el clip de audio", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

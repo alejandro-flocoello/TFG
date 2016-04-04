@@ -16,7 +16,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ESCUCHAR"
+        android:text="ESCUCHAR MENSAJE"
         android:id="@+id/btnSpeak"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
@@ -24,17 +24,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CLIP DE AUDIO"
-        android:id="@+id/btnClipAudio"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/btnSpeak" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="VIDEO ADJUNTO"
         android:id="@+id/btnVideoAdd"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/btnClipAudio" />
+        android:layout_toStartOf="@+id/btnSpeak" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -57,8 +50,48 @@
         android:layout_below="@+id/btnSpeak"
         android:layout_toStartOf="@+id/messageImg"
         android:gravity="fill_horizontal"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="15dp" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PARAR"
+        android:id="@+id/buttonStop"
+        android:layout_below="@+id/btnSpeak"
+        android:layout_alignParentEnd="true"
+        android:enabled="false" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PAUSA"
+        android:id="@+id/buttonPausa"
+        android:layout_alignBottom="@+id/buttonStop"
+        android:layout_toStartOf="@+id/buttonStop"
+        android:enabled="false" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REPRODUCIR"
+        android:id="@+id/buttonReproduccion"
+        android:layout_alignBottom="@+id/buttonPausa"
+        android:layout_toStartOf="@+id/buttonPausa" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textClipAudio"
+        android:id="@+id/textClipAudio"
+        android:gravity="center"
+        android:layout_alignTop="@+id/buttonReproduccion"
+        android:layout_alignBottom="@+id/buttonReproduccion"
+        android:layout_toStartOf="@+id/buttonReproduccion"
+        android:paddingRight="10dp" />
 
 
 </RelativeLayout>

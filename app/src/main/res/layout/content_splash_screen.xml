@@ -36,7 +36,9 @@
         android:textAlignment="center"
         android:singleLine="false"
         android:typeface="sans"
-        android:background="@drawable/border" />
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:padding="10dp" />
 
     <ImageView
         android:layout_width="100dp"
