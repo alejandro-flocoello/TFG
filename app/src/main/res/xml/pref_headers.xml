@@ -18,8 +18,10 @@
         android:title="@string/pref_header_data_sync" />
 
     <header
-        android:fragment="es.upm.ssr.gatv.tfg.SettingsActivity$VozPreferenceFragment"
+        android:fragment="es.upm.ssr.gatv.tfg.SettingsActivity$AccessibilityPreferenceFragment"
         android:icon="@drawable/ic_action_mic"
-        android:title="@string/pref_header_voz" />
+        android:title="@string/pref_header_accesibilidad" />
+
+
 
 </preference-headers>
