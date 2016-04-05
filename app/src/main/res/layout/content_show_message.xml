@@ -16,28 +16,23 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ESCUCHAR MENSAJE"
-        android:id="@+id/btnSpeak"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VIDEO ADJUNTO"
+        android:text="VER VIDEO ADJUNTO"
         android:id="@+id/btnVideoAdd"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/btnSpeak" />
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_below="@+id/buttonStop"
+        android:layout_alignEnd="@+id/buttonStop"
+        android:singleLine="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/messageImg"
-        android:layout_below="@+id/btnSpeak"
-        android:layout_alignEnd="@+id/btnSpeak"
-        android:layout_toLeftOf="@+id/btnSpeak"
-        android:layout_marginLeft="50dp"
-        android:layout_centerInParent="true" />
+        android:layout_marginLeft="40dp"
+        android:layout_below="@+id/buttonStop"
+        android:layout_alignEnd="@+id/btnVideoAdd"
+        android:maxWidth="500dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,12 +41,11 @@
         android:id="@+id/messageText"
         android:textAlignment="gravity"
         android:paddingTop="20dp"
-        android:layout_alignWithParentIfMissing="false"
-        android:layout_below="@+id/btnSpeak"
-        android:layout_toStartOf="@+id/messageImg"
+        android:layout_above="@+id/btnSpeak"
         android:gravity="fill_horizontal"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="15dp" />
+        android:layout_toStartOf="@+id/messageImg"
+        android:layout_below="@+id/buttonStop"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -59,7 +53,6 @@
         android:layout_height="wrap_content"
         android:text="PARAR"
         android:id="@+id/buttonStop"
-        android:layout_below="@+id/btnSpeak"
         android:layout_alignParentEnd="true"
         android:enabled="false" />
 
@@ -92,6 +85,27 @@
         android:layout_alignBottom="@+id/buttonReproduccion"
         android:layout_toStartOf="@+id/buttonReproduccion"
         android:paddingRight="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textVideoAdd"
+        android:id="@+id/textVideoAdd"
+        android:gravity="center"
+        android:paddingRight="10dp"
+        android:layout_below="@+id/buttonPausa"
+        android:layout_toStartOf="@+id/btnVideoAdd"
+        android:layout_alignBottom="@+id/btnVideoAdd" />
+
+    <Button
+        style="?android:attr/buttonStyleInset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ESCUCHAR MENSAJE"
+        android:id="@+id/btnSpeak"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:enabled="true" />
 
 
 </RelativeLayout>

@@ -19,7 +19,7 @@
 
     <header
         android:fragment="es.upm.ssr.gatv.tfg.SettingsActivity$AccessibilityPreferenceFragment"
-        android:icon="@drawable/ic_action_mic"
+        android:icon="@drawable/ic_accessibility"
         android:title="@string/pref_header_accesibilidad" />
 
 

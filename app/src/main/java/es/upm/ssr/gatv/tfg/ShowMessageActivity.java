@@ -31,6 +31,7 @@ import java.util.Locale;
 public class ShowMessageActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
     public static final String DEBUG_MENSAJES = "ShowMessage" ;
+    public static final String DEBUG_TTS = "TTS" ;
     private TextToSpeech tts;
     private Button btnSpeak;
     private Button btnReproduce;
@@ -92,6 +93,7 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
 
             @Override
             public void onClick(View arg0) {
+                Toast.makeText(getApplicationContext(), "Parado. Pulse reproducir para volver a escuchar",Toast.LENGTH_SHORT).show();
                 mediaPlayer.stop();
                 mediaPlayer = null;
                 btnReproduce.setEnabled(true);
@@ -105,7 +107,7 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
         btnPausa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Pausing sound",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Pausa. Pulse reproducir para continuar escuchando",Toast.LENGTH_SHORT).show();
                 mediaPlayer.pause();
                 Log.d(DEBUG_MENSAJES, "isPlaying() : " + mediaPlayer.isPlaying());
                 btnStop.setEnabled(false);
@@ -128,6 +130,7 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
             ImageView messageImg = (ImageView)findViewById(R.id.messageImg);
             TextView messageText = (TextView) findViewById(R.id.messageText);
             TextView textClipAudio = (TextView) findViewById(R.id.textClipAudio);
+            TextView textVideoAdd = (TextView) findViewById(R.id.textVideoAdd);
 
             //Button btnSpeak = (Button) findViewById(R.id.btnSpeak);
 
@@ -163,7 +166,9 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
 
 
             }
-            else{btnVideoAdd.setVisibility(View.INVISIBLE);}
+            else{btnVideoAdd.setVisibility(View.INVISIBLE);
+                textVideoAdd.setVisibility(View.INVISIBLE);
+                }
 
 
             messageText.setMovementMethod(new ScrollingMovementMethod());
@@ -171,7 +176,7 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
             messageText.setText(txt);
             SharedPreferences sharedPrefs = PreferenceManager
                     .getDefaultSharedPreferences(this);
-            Integer myNum = Integer.parseInt(sharedPrefs.getString("set_text_list", "NULL"));
+            Integer myNum = Integer.parseInt(sharedPrefs.getString("set_text_list", "18"));
             messageText.setTextSize(myNum);
             Log.d(DEBUG_MENSAJES, "Cargando el mensaje");
         } catch (Exception e){
@@ -210,21 +215,21 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 btnSpeak.setEnabled(false);
 
-                Log.e("TTS", "This Language is not supported");
+                Log.d(DEBUG_TTS, "This Language is not supported");
             } else {
                 btnSpeak.setEnabled(true);
 
             }
 
         } else {
-            Log.e("TTS", "Initilization Failed!");
+            Log.d(DEBUG_TTS, "Initilization Failed!");
         }
     }
 
 
     private void sintetiza( String texto ) {
         tts.speak( texto, TextToSpeech.QUEUE_ADD, null );
-        Log.e("TTS", "Dime algo");
+        Log.d(DEBUG_TTS, "Dime algo");
     }
 
     //Cuando se cierra la aplicacion se destruye el TTS
@@ -251,8 +256,10 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
                 mediaPlayer.setDataSource(urlString);
                 mediaPlayer.prepare();
                 mediaPlayer.start();
+                Toast.makeText(getApplicationContext(), "Reproduciendo",Toast.LENGTH_SHORT).show();
             }else{
                 mediaPlayer.start();
+                Toast.makeText(getApplicationContext(), "Reproduciendo",Toast.LENGTH_SHORT).show();
                 Log.d(DEBUG_MENSAJES, "isPlaying() : " + mediaPlayer.isPlaying());
             }
 

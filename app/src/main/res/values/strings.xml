@@ -30,6 +30,7 @@
     <string name="title_item_detail">Item Detail</string>
     <string name="title_activity_settings">Ajustes</string>
 
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
@@ -56,18 +57,14 @@
 
     <string name="pref_title_set_text_size">Cambiar el tamaño de la fuente</string>
     <string-array name="pref_set_text_size">
-        <item>12</item>
-        <item>14</item>
-        <item>16</item>
-        <item>18</item>
-        <item>20</item>
+        <item>Pequeño</item>
+        <item>Mediano</item>
+        <item>Grande</item>
     </string-array>
     <string-array name="pref_set_text_size_values">
-        <item>12</item>
-        <item>14</item>
         <item>16</item>
-        <item>18</item>
-        <item>20</item>
+        <item>19</item>
+        <item>22</item>
     </string-array>
 
 
@@ -155,11 +152,8 @@
     <string name="pref_apariencia">Apariencia</string>
 
 
-
-
-
-
     <string name="pref_switch_sintetizador">Habilite el sintetizador de voz para los Mensajes.</string>
     <string name="pref_title_switch_sintetizador">Habilitar</string>
     <string name="textClipAudio">Clip de Audio: </string>
+    <string name="textVideoAdd">Video adjunto: </string>
 </resources>

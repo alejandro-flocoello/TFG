@@ -9,14 +9,14 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.upm.ssr.gatv.tfg.MensajesActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_mensajes">
 
     <ListView
         android:id="@+id/entryListMensajes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="false"
-        android:layout_marginTop="100dp" />
+        android:layout_alignParentStart="false" />
 
 
 

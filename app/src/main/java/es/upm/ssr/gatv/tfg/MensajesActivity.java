@@ -34,8 +34,6 @@ public class MensajesActivity extends  AppCompatActivity{
     private AdaptadorClass mAdapter;
     private ListView entryListMensajes;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +70,6 @@ public class MensajesActivity extends  AppCompatActivity{
             mAdapter = new AdaptadorClass(getApplicationContext(), -1, GatvXmlParser.getStackSitesFromFile(MensajesActivity.this));
             entryListMensajes.setAdapter(mAdapter);
         }
-
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -147,7 +143,7 @@ public class MensajesActivity extends  AppCompatActivity{
 
     public  void refreshButton(){
         Intent intent = getIntent();
-        overridePendingTransition(android.R.anim.cycle_interpolator, android.R.anim.cycle_interpolator);
+        //overridePendingTransition(android.R.anim.cycle_interpolator, android.R.anim.cycle_interpolator);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
