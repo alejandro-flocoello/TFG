@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TFG</string>
+    <string name="Ajustes">PARAMÈTRES</string>
+    <string name="Alarma">ALARME</string>
+    <string name="Juegos">JEUX</string>
+    <string name="Mensajes">MESSAGES</string>
+    <string name="Videoconferencia">VIDÉOCONFÉRENCE</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="connection_error">Incapable de charger le teneur.  Vérifier la partage de connexion</string>
+    <string name="pref_apariencia">Apparence</string>
+    <string name="pref_default_display_name">Usager</string>
+    <string name="pref_header_accesibilidad">Accessibilité</string>
+    <string name="pref_header_data_sync"><![CDATA[Données & Synchronisation]]></string>
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_header_voz">Synthése vocale</string>
+    <string name="pref_ringtone_silent">Silence</string>
+    <string name="pref_select_app_language">Sélectionner la langue pour la application</string>
+    <string name="pref_select_language">Sèlectionner une langue</string>
+    <string name="pref_switch_sintetizador">Habiliter la synthése vocale</string>
+    <string name="pref_title_display_name">Usager</string>
+    <string name="pref_title_new_message_notifications">Noveau son de notification</string>
+    <string name="pref_title_ringtone">Son de notification</string>
+    <string name="pref_title_set_text_font">Changer le type de caractére</string>
+    <string name="pref_title_set_text_size">Changer la taille de caractére</string>
+    <string name="pref_title_switch_sintetizador">Habiliter</string>
+    <string name="pref_title_sync_frequency">Fréquence de Synchronisation</string>
+    <string name="pref_title_system_sync_settings">Paramétres de synchronisation du systéme</string>
+    <string name="textClipAudio">Audio clip:</string>
+    <string name="textVideoAdd">Video clip:</string>
+    <string name="title_activity_ajustes">Paramétres</string>
+    <string name="title_activity_alarma">Alarme</string>
+    <string name="title_activity_juegos">Jeux</string>
+    <string name="title_activity_mensajes">Messages</string>
+    <string name="title_activity_settings">Paramétres</string>
+    <string name="title_activity_show_message">Montrer le message</string>
+    <string name="title_activity_show_settings">Paramétres</string>
+    <string name="title_activity_video_conferencia">Vidéoconférence</string>
+    <string name="updated">Dernière mise à jour</string>
+    <string name="xml_error">Erreur au analyser le XML</string>
+    <string name="splashText">BIENVENUE </string>
+</resources>

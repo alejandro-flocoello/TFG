@@ -54,8 +54,9 @@ public class SplashScreen extends Activity
             SharedPreferences sharedPrefs = PreferenceManager
                     .getDefaultSharedPreferences(this);
             String msgInitial = sharedPrefs.getString("example_text","USUARIO");
-            Log.d(DEBUG_SPLASH, "Usuario:" +msgInitial);
-            splashText.setText("BIENVENIDO  " + msgInitial);
+            Log.d(DEBUG_SPLASH, "Usuario:" + msgInitial);
+            String bienvenido = getString(R.string.splashText);
+            splashText.setText(bienvenido +"\n"+ msgInitial);
         } catch (Exception e){
 
         }

@@ -50,6 +50,7 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
 
         tts = new TextToSpeech(this,this);
 
+
         setContentView(R.layout.activity_show_message);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,6 +63,10 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
                         .setAction("Action", null).show();
             }
         });
+
+
+
+
         //Get the bundle
         Bundle bundle = getIntent().getExtras();
         //Extract the data…
@@ -77,8 +82,18 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
         btnSpeak = (Button) findViewById(R.id.btnSpeak);
         btnPausa = (Button) findViewById(R.id.buttonPausa);
 
-
         cargaMensajes(title, img_msg, txt, clip_audio, video_add);
+
+        SharedPreferences sharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        Boolean tts_enabled = sharedPrefs.getBoolean("switch_sintetizador",true);
+
+        if (tts_enabled){
+                btnSpeak.setVisibility(View.VISIBLE);
+        } else{
+                btnSpeak.setVisibility(View.INVISIBLE);
+        }
+
 
         messageText = txt.toString();
         btnSpeak.setOnClickListener(new View.OnClickListener() {

@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">TFG</string>
-    <string name="action_settings">Settings</string>
-    <string name="Videos">VIDEOS</string>
-    <string name="title_activity_videos">Videos</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="title_activity_videos" translatable="false">Videos</string>
     <string name="title_activity_mensajes">Mensajes</string>
     <string name="title_activity_alarma">Alarma</string>
     <string name="Alarma">ALARMA</string>
@@ -11,30 +10,31 @@
     <string name="Videoconferencia">VIDEOCONFERENCIA</string>
     <string name="title_activity_juegos">Juegos</string>
     <string name="title_activity_ajustes">Ajustes</string>
-    <string name="title_activity_video_conferencia">VideoConferencia</string>
+    <string name="title_activity_video_conferencia">Videoconferencia</string>
     <string name="Ajustes">AJUSTES</string>
+    <string name="splashText">BIENVENIDO </string>
 
-    <string name="connection_error">Unable to load content. Check your network connection.</string>
-    <string name="xml_error">Error parsing XML.</string>
-    <string name="page_title">Newest StackOverflow questions tagged \'android\'</string>
-    <string name="updated">Last updated:</string>
-    <string name="title_activity_video_player">Video Player</string>
-    <string name="PlayVideo">PLAY</string>
+    <string name="connection_error">No ha sido posible cargar el contenido. Compruebe la conexión de red</string>
+    <string name="xml_error">Error al parsear XML.</string>
+    <string name="page_title" translatable="false">Newest StackOverflow questions tagged \'android\'</string>
+    <string name="updated">Actualizado por utlima vez:</string>
+    <string name="title_activity_video_player" translatable="false">Video Player</string>
+    <string name="PlayVideo" translatable="false">PLAY</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="Refresh"/>
-    <string name="title_activity_show_message">Showing Message</string>
-    <string name="title_activity_splash_screen">TFG</string>
-    <string name="bckground_img">bckground_img</string>
-    <string name="title_item_list">Items</string>
-    <string name="title_item_detail">Item Detail</string>
+    <string name="title_activity_show_message">Mostrando mensaje</string>
+    <string name="title_activity_splash_screen" translatable="false">TFG</string>
+    <string name="bckground_img" translatable="false">bckground_img</string>
+    <string name="title_item_list" translatable="false">Items</string>
+    <string name="title_item_detail" translatable="false">Item Detail</string>
     <string name="title_activity_settings">Ajustes</string>
 
 
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
+    <string name="pref_header_general" translatable="false">General</string>
 
     <string name="pref_title_social_recommendations">Habilitar recomendaciones de amigos</string>
     <string name="pref_description_social_recommendations">Recomendaciones para contactar basadas en tu historial de mensajes</string>
@@ -71,8 +71,8 @@
     <string name="pref_title_set_text_font">Cambiar el tipo del fuente</string>
     <string-array name="pref_set_text_font">
         <item>Arial</item>
-        <item>Tahoma</item>
         <item>Helvetica</item>
+        <item>Tahoma</item>
         <item>Verdana</item>
     </string-array>
     <string-array name="pref_set_text_font_values">
@@ -116,7 +116,7 @@
 
     <string name="pref_title_vibrate">Vibración</string>
     <string name="title_activity_show_settings">Ajustes</string>
-    <string name="title_activity_speak">SpeakActivity</string>
+    <string name="title_activity_speak" translatable="false">SpeakActivity</string>
 
     <!-- Example settings for Sintetizador de Voz -->
 
@@ -152,8 +152,9 @@
     <string name="pref_apariencia">Apariencia</string>
 
 
-    <string name="pref_switch_sintetizador">Habilite el sintetizador de voz para los Mensajes.</string>
+    <string name="pref_switch_sintetizador">Habilite el sintetizador de voz </string>
     <string name="pref_title_switch_sintetizador">Habilitar</string>
     <string name="textClipAudio">Clip de Audio: </string>
     <string name="textVideoAdd">Video adjunto: </string>
+    <string name="Videos" translatable="false">VIDEOS</string>
 </resources>
