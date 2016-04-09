@@ -125,24 +125,28 @@
     <string name="pref_select_app_language">Seleccione el idioma de la aplicación</string>
     <string-array name="pref_set_language">
         <item>Español</item>
-        <item>Inglés</item>
-        <item>Francés</item>
+        <item>English</item>
+        <item>Français</item>
+        <item>Por defecto. Idioma del sistema</item>
     </string-array>
     <string-array name="pref_set_language_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
     <string-array name="pref_set_app_language">
         <item>Español</item>
-        <item>Inglés</item>
-        <item>Francés</item>
+        <item>English</item>
+        <item>Français</item>
+        <item>Por defecto. Idioma del sistema</item>
     </string-array>
     <string-array name="pref_set_app_language_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
 
@@ -157,4 +161,9 @@
     <string name="textClipAudio">Clip de Audio: </string>
     <string name="textVideoAdd">Video adjunto: </string>
     <string name="Videos" translatable="false">VIDEOS</string>
+    <string name="verVideo">VER VIDEO ADJUNTO</string>
+    <string name="pausa">PAUSA</string>
+    <string name="reproducir">REPRODUCIR</string>
+    <string name="parar">PARAR</string>
+    <string name="escuchar">ESCUCHAR MENSAJE</string>
 </resources>

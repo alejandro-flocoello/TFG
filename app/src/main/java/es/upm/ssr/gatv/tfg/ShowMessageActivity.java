@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -32,6 +33,7 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
 
     public static final String DEBUG_MENSAJES = "ShowMessage" ;
     public static final String DEBUG_TTS = "TTS" ;
+    private final Locale SPANISH = new Locale("es","ES");
     private TextToSpeech tts;
     private Button btnSpeak;
     private Button btnReproduce;
@@ -224,9 +226,28 @@ public class ShowMessageActivity extends AppCompatActivity implements TextToSpee
 
         if ( status == TextToSpeech.SUCCESS ) {
 
-            //coloca lenguaje por defecto en el celular, en nuestro caso el lenguaje es aspañol ;)
-            int result = tts.setLanguage( Locale.getDefault() );
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+            Integer language_value = Integer.parseInt(sharedPrefs.getString("select_language", "0"));
+            Integer result = 0;
+            switch (language_value) {
+                case 0:
+                    result = tts.setLanguage(SPANISH);
+                    break;
+                case 1:
+                     result = tts.setLanguage(Locale.ENGLISH);
+                    break;
+                case 2:
+                    result = tts.setLanguage(Locale.FRENCH);
+                    break;
+                case 3:
+                    result = tts.setLanguage(Locale.getDefault());
+                    break;
+            }
 
+
+            //coloca lenguaje por defecto en el celular, en nuestro caso el lenguaje es aspañol ;)
+
+            Log.d("Idioma", result.toString());
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 btnSpeak.setEnabled(false);
 

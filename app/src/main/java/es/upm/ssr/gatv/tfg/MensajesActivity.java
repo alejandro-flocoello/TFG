@@ -1,12 +1,16 @@
 package es.upm.ssr.gatv.tfg;
 
+        import android.app.AlarmManager;
+        import android.app.PendingIntent;
         import android.content.Context;
         import android.content.DialogInterface;
         import android.content.Intent;
         import android.net.ConnectivityManager;
         import android.net.NetworkInfo;
         import android.os.AsyncTask;
+        import android.os.Build;
         import android.os.Bundle;
+        import android.os.Handler;
         import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.Snackbar;
         import android.support.v4.app.FragmentActivity;
@@ -26,13 +30,18 @@ package es.upm.ssr.gatv.tfg;
         import android.widget.Toast;
 
         import java.io.FileNotFoundException;
-
+        import java.util.Calendar;
+        import java.util.Timer;
+        import java.util.TimerTask;
 
 
 public class MensajesActivity extends  AppCompatActivity{
 
     private AdaptadorClass mAdapter;
     private ListView entryListMensajes;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +62,7 @@ public class MensajesActivity extends  AppCompatActivity{
                 String title = mAdapter.getItem(pos).getTitle();
                 String audio = mAdapter.getItem(pos).getAudioUrl();
                 String videoAdd = mAdapter.getItem(pos).getLink();
-                showMensaje(img_msg,txt,title,videoAdd,audio);
-//                Intent i = new Intent(Intent.ACTION_VIEW);
-//                i.setData(Uri.parse(url));
-//                startActivity(i);
+                showMensaje(img_msg, txt, title, videoAdd, audio);
 
             }
 
@@ -84,8 +90,9 @@ public class MensajesActivity extends  AppCompatActivity{
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
+
+
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -132,7 +139,7 @@ public class MensajesActivity extends  AppCompatActivity{
         bundle.putString("txt",txt);
         bundle.putString("title", title);
         bundle.putString("clip_audio",audio);
-        bundle.putString("video_add",videoAdd);
+        bundle.putString("video_add", videoAdd);
 
         //Add the bundle to the intent
 
@@ -155,7 +162,7 @@ public class MensajesActivity extends  AppCompatActivity{
         alertDialogBuilder.setMessage("No ha sido posible cargar la lista de mensajes. Posible servidor caido");
         alertDialogBuilder.setTitle("ERROR");
         alertDialogBuilder.setIcon(R.drawable.ic_action_warning);
-        alertDialogBuilder.setNegativeButton("OK",new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 overridePendingTransition(android.R.anim.cycle_interpolator, android.R.anim.cycle_interpolator);
@@ -167,6 +174,9 @@ public class MensajesActivity extends  AppCompatActivity{
         alertDialog.show();
 
     }
+
+
+
 
 
 }

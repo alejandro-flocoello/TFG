@@ -1,13 +1,11 @@
 package es.upm.ssr.gatv.tfg;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,32 +17,29 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
-import android.os.Bundle;
+
 import android.preference.PreferenceManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import java.util.Locale;
 
-import java.lang.reflect.Type;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
     private static final int RESULT_SETTINGS = 1;
     private Typeface font_face;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    private TextToSpeech tts;
+    private final Locale SPANISH = new Locale("es","ES");
+    private Boolean tts_enabled = false;
+    private SharedPreferences sharedPrefs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        tts = new TextToSpeech(this,this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton mensajes_btn = (ImageButton) findViewById(R.id.buttonMensajes);
         final ImageButton alarma_btn = (ImageButton) findViewById(R.id.buttonAlarma);
 
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         Integer font_value = Integer.parseInt(sharedPrefs.getString("set_text_font_list", "0"));
 
         switch (font_value) {
@@ -83,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
                 font_face = Typeface.createFromAsset(getAssets(), "fonts/Verdana.ttf");
                 break;
         }
+
+
+        tts_enabled = sharedPrefs.getBoolean("switch_sintetizador",true);
 
 
         Log.d("font settings", font_value.toString());
@@ -103,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
                     juegos_btn.setBackground(d);
                     juegos_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-
+                    if (tts_enabled){
+                        sintetiza(juegos_text.getText().toString());
+                    }
                 }
 
                 return false;
@@ -119,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
                     ajustes_btn.setBackground(d);
                     ajustes_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    if (tts_enabled){
+                        sintetiza(ajustes_text.getText().toString());
+                    }
                 }
 
                 return false;
@@ -134,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
                     videocnf_btn.setBackground(d);
                     videocnf_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    if (tts_enabled){
+                        sintetiza(videocnf_text.getText().toString());
+                    }
                 }
 
                 return false;
@@ -149,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
                     videos_btn.setBackground(d);
                     videos_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    if (tts_enabled){
+                        sintetiza(videos_text.getText().toString());
+                    }
                 }
 
                 return false;
@@ -164,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
                     mensajes_btn.setBackground(d);
                     mensajes_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    if (tts_enabled){
+                        sintetiza(mensajes_text.getText().toString());
+                    }
                 }
 
                 return false;
@@ -179,6 +191,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
                     alarma_btn.setBackground(d);
                     alarma_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    if (tts_enabled){
+                        sintetiza(alarma_text.getText().toString());
+                    }
                 }
 
                 return false;
@@ -194,11 +209,19 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
     }
+
+    public  void onPostResume(){
+        if (tts != null){
+            tts.stop();
+            tts.shutdown();
+            tts = new TextToSpeech(this,this);
+        }
+        tts_enabled = sharedPrefs.getBoolean("switch_sintetizador",true);
+        super.onPostResume();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -265,45 +288,63 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    //Inicia TTS
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onInit(int status) {
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://es.upm.ssr.gatv.tfg/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
+        if ( status == TextToSpeech.SUCCESS ) {
+
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+            Integer language_value = Integer.parseInt(sharedPrefs.getString("select_language", "0"));
+            Integer result = 0;
+            switch (language_value) {
+                case 0:
+                    result = tts.setLanguage(SPANISH);
+                    break;
+                case 1:
+                    result = tts.setLanguage(Locale.ENGLISH);
+                    break;
+                case 2:
+                    result = tts.setLanguage(Locale.FRENCH);
+                    break;
+                case 3:
+                    result = tts.setLanguage(Locale.getDefault());
+                    break;
+            }
+
+
+            //coloca lenguaje por defecto en el celular, en nuestro caso el lenguaje es aspañol ;)
+
+            Log.d("Idioma", result.toString());
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+
+                Log.d("Main_tts", "This Language is not supported");
+            } else {
+                Log.d("Main_tts", "This Language is not supported");
+
+            }
+
+        } else {
+            Log.d("Main_tts", "Initilization Failed!");
+        }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://es.upm.ssr.gatv.tfg/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
+    private void sintetiza( String texto ) {
+        tts.speak(texto, TextToSpeech.QUEUE_ADD, null);
+
+    }
+
+    //Cuando se cierra la aplicacion se destruye el TTS
+    @Override
+
+
+    protected void onDestroy() {
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
     }
 
 

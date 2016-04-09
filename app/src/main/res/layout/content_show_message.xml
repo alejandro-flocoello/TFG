@@ -14,10 +14,10 @@
 
 
     <Button
-        style="?android:attr/buttonStyleInset"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="VER VIDEO ADJUNTO"
+        android:text="@string/verVideo"
         android:id="@+id/btnVideoAdd"
         android:layout_alignWithParentIfMissing="false"
         android:layout_below="@+id/buttonStop"
@@ -52,7 +52,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PARAR"
+        android:text="@string/parar"
         android:id="@+id/buttonStop"
         android:layout_alignParentEnd="true"
         android:enabled="false" />
@@ -61,7 +61,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PAUSA"
+        android:text="@string/pausa"
         android:id="@+id/buttonPausa"
         android:layout_alignBottom="@+id/buttonStop"
         android:layout_toStartOf="@+id/buttonStop"
@@ -71,7 +71,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="REPRODUCIR"
+        android:text="@string/reproducir"
         android:id="@+id/buttonReproduccion"
         android:layout_alignBottom="@+id/buttonPausa"
         android:layout_toStartOf="@+id/buttonPausa" />
@@ -99,10 +99,10 @@
         android:layout_alignBottom="@+id/btnVideoAdd" />
 
     <Button
-        style="?android:attr/buttonStyleInset"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ESCUCHAR MENSAJE"
+        android:text="@string/escuchar"
         android:id="@+id/btnSpeak"
         android:layout_alignParentBottom="true"
         android:enabled="true"

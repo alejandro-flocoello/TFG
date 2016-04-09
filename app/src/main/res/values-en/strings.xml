@@ -40,4 +40,9 @@
     <string name="xml_error">Error parsing XML.</string>
     <string name="action_settings">Settings</string>
     <string name="splashText">WELCOME</string>
+    <string name="verVideo">WATCH VIDEO CLIP</string>
+    <string name="parar">STOP</string>
+    <string name="pausa">PAUSE</string>
+    <string name="reproducir">PLAY</string>
+    <string name="escuchar">TEXT-TO-SPEECH</string>
 </resources>

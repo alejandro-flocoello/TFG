@@ -11,13 +11,12 @@ import android.widget.Button;
 
 public class SpeakVoiceClass  implements OnInitListener{
 
-
-    private TextToSpeech tts;
+    public  TextToSpeech tts ;
     private Button btnSpeak;
     private String messageText;
 
-    public SpeakVoiceClass(Context context){
-        tts = new TextToSpeech(context, this);
+    public SpeakVoiceClass(TextToSpeech tts){
+        tts = this.tts;
     }
 
     public void onInit(int status) {

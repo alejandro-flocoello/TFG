@@ -39,4 +39,9 @@
     <string name="updated">Dernière mise à jour</string>
     <string name="xml_error">Erreur au analyser le XML</string>
     <string name="splashText">BIENVENUE </string>
+    <string name="verVideo">VOIR LE VIDEO CLIP</string>
+    <string name="parar">ARRÈTER</string>
+    <string name="pausa">PAUSE</string>
+    <string name="escuchar">ÉCOUTER LE MESSAGE</string>
+    <string name="reproducir">ÉCOUTER</string>
 </resources>
