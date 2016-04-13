@@ -5,12 +5,17 @@ package es.upm.ssr.gatv.tfg;
         import android.content.Context;
         import android.content.DialogInterface;
         import android.content.Intent;
+        import android.content.SharedPreferences;
+        import android.media.AudioManager;
+        import android.media.MediaPlayer;
         import android.net.ConnectivityManager;
         import android.net.NetworkInfo;
+        import android.net.Uri;
         import android.os.AsyncTask;
         import android.os.Build;
         import android.os.Bundle;
         import android.os.Handler;
+        import android.preference.PreferenceManager;
         import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.Snackbar;
         import android.support.v4.app.FragmentActivity;
@@ -30,6 +35,7 @@ package es.upm.ssr.gatv.tfg;
         import android.widget.Toast;
 
         import java.io.FileNotFoundException;
+        import java.io.IOException;
         import java.util.Calendar;
         import java.util.Timer;
         import java.util.TimerTask;
@@ -39,6 +45,11 @@ public class MensajesActivity extends  AppCompatActivity{
 
     private AdaptadorClass mAdapter;
     private ListView entryListMensajes;
+    private MediaPlayer mMediaPlayer;
+    private SharedPreferences sharedPrefs;
+    private SharedPreferences.Editor editor;
+    private int posant;
+
 
 
 
@@ -49,9 +60,14 @@ public class MensajesActivity extends  AppCompatActivity{
         Log.i("EntryList", "OnCreate()");
         setContentView(R.layout.activity_mensajes);
 
+        sharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        editor = sharedPrefs.edit();
+
         //Get reference to our ListView
         entryListMensajes = (ListView)findViewById(R.id.entryListMensajes);
-
+        posant = sharedPrefs.getInt("posact_msg", 0);
+        Log.d("Pos.ant", Integer.toString(posant));
         //Set the click listener to launch the browser when a row is clicked.
         entryListMensajes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -101,9 +117,19 @@ public class MensajesActivity extends  AppCompatActivity{
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    public void onPostResume(){
+        if (mMediaPlayer != null){
+            mMediaPlayer.stop();
+            mMediaPlayer.release();
+        }
+        super.onPostResume();
+    }
+
     private class EntryDownloadTask extends AsyncTask<Void, Void, Void> {
 
         public boolean server;
+        private int posactual = 0;
+        private boolean switch_notification=false;
         @Override
         protected Void doInBackground(Void... arg0) {
             //Download the file
@@ -124,8 +150,17 @@ public class MensajesActivity extends  AppCompatActivity{
             mAdapter = new AdaptadorClass(MensajesActivity.this, -1, GatvXmlParser.getStackSitesFromFile(MensajesActivity.this));
             entryListMensajes.setAdapter(mAdapter);
             Log.i("StackSites", "Server value onPostExecute = " + server);
+            posactual = mAdapter.getCount();
+            editor.putInt("posact_msg",posactual);
+            editor.commit();
             if (!server){
-                displayAlert();
+                displayAlert();}
+            Log.d("Pos.actual", Integer.toString(posactual));
+            switch_notification = sharedPrefs.getBoolean("notifications_new_message",false);
+
+            if ((posactual - posant) > 0) {
+                if(switch_notification){
+                alarm();}
             }
         }
     }
@@ -136,7 +171,7 @@ public class MensajesActivity extends  AppCompatActivity{
 
         //Add your data to bundle
         bundle.putString("img_msg", img_msg);
-        bundle.putString("txt",txt);
+        bundle.putString("txt", txt);
         bundle.putString("title", title);
         bundle.putString("clip_audio",audio);
         bundle.putString("video_add", videoAdd);
@@ -175,7 +210,32 @@ public class MensajesActivity extends  AppCompatActivity{
 
     }
 
+    private void alarm(){
+        SharedPreferences getAlarms = PreferenceManager.getDefaultSharedPreferences(this);
+        String alarms = getAlarms.getString("notifications_new_message_ringtone", "default ringtone");
+        Uri uri = Uri.parse(alarms);
+        playSound(this, uri);
 
+        //call mMediaPlayer.stop(); when you want the sound to stop
+    }
+
+
+
+    private void playSound(Context context, Uri alert) {
+        mMediaPlayer = new MediaPlayer();
+        try {
+            mMediaPlayer.setDataSource(context, alert);
+            final AudioManager audioManager = (AudioManager) context
+                    .getSystemService(Context.AUDIO_SERVICE);
+            if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+                mMediaPlayer.prepare();
+                mMediaPlayer.start();
+            }
+        } catch (IOException e) {
+            System.out.println("OOPS");
+        }
+    }
 
 
 

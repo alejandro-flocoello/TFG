@@ -1,5 +1,8 @@
 package es.upm.ssr.gatv.tfg;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +34,9 @@ public class VideosActivity extends  AppCompatActivity {
     private AdaptadorClass mAdapter;
     private ListView entryList;
     private MediaPlayer mMediaPlayer;
+    private SharedPreferences sharedPrefs;
+    private SharedPreferences.Editor editor;
+    private int posant;
 
 
 
@@ -40,9 +46,13 @@ public class VideosActivity extends  AppCompatActivity {
         Log.i("EntryList", "OnCreate()");
         setContentView(R.layout.activity_videos);
 
+        sharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        editor = sharedPrefs.edit();
         //Get reference to our ListView
         entryList = (ListView)findViewById(R.id.entryList);
-
+        posant = sharedPrefs.getInt("posact_video", 0);
+        Log.d("Pos.ant", Integer.toString(posant));
         //Set the click listener to launch the browser when a row is clicked.
         entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -106,7 +116,8 @@ public class VideosActivity extends  AppCompatActivity {
 
         public boolean server;
         private int posactual = 0;
-        private int posant = 0;
+        private boolean switch_notification = false;
+
 
     @Override
     protected Void doInBackground(Void... arg0) {
@@ -126,20 +137,24 @@ public class VideosActivity extends  AppCompatActivity {
     @Override
     protected void onPostExecute(Void result){
         //setup our Adapter and set it to the ListView.
-        posant = posactual;
+
         mAdapter = new AdaptadorClass(VideosActivity.this, -1, GatvXmlParser.getStackSitesFromFile(VideosActivity.this));
         entryList.setAdapter(mAdapter);
         Log.i("StackSites", "adapter size = " + mAdapter.getCount());
         Log.i("StackSites", "Server value = " + server);
         posactual = mAdapter.getCount();
+        editor.putInt("posact_video",posactual);
+        editor.commit();
         if (!server){
             displayAlert();}
         Log.d("Pos.actual", Integer.toString(posactual));
-        if ((posactual - posant)>0) {
-                alarm();
+        switch_notification = sharedPrefs.getBoolean("notifications_new_message",false);
+
+        if ((posactual - posant) > 0) {
+            if(switch_notification){
+                alarm();}
+            showNotification();
         }
-
-
     }
 }
 
@@ -212,6 +227,47 @@ public class VideosActivity extends  AppCompatActivity {
         }
     }
 
+    public void showNotification(){
+
+
+        // intent triggered, you can add other intent for other actions
+        Intent intent = new Intent(VideosActivity.this,null);
+        PendingIntent pIntent = PendingIntent.getActivity(VideosActivity.this, 0, intent, 0);
+
+        // this is it, we'll build the notification!
+        // in the addAction method, if you don't want any icon, just set the first param to 0
+        Notification mNotification = new Notification.Builder(this)
+
+                .setContentTitle("Nuevo Video!")
+                .setContentText("Existe nuevo contenido en videos!")
+                .setSmallIcon(R.drawable.videos_btn)
+                .setContentIntent(pIntent)
+
+
+                .addAction(R.drawable.videos_btn, "Ver", pIntent)
+                .addAction(0, "Recordar", pIntent)
+
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //alarm();
+        // If you want to hide the notification after it was selected, do the code below
+        // myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        notificationManager.notify(0, mNotification);
+    }
+
+    public void cancelNotification(int notificationId){
+
+        if (Context.NOTIFICATION_SERVICE!=null) {
+            String ns = Context.NOTIFICATION_SERVICE;
+            NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(ns);
+            nMgr.cancel(notificationId);
+        }
+    }
 
 }
+
+
+
 

@@ -34,6 +34,7 @@ public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnI
     private SharedPreferences sharedPrefs;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
