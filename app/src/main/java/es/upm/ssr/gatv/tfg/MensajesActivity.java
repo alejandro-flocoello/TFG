@@ -1,6 +1,8 @@
 package es.upm.ssr.gatv.tfg;
 
         import android.app.AlarmManager;
+        import android.app.Notification;
+        import android.app.NotificationManager;
         import android.app.PendingIntent;
         import android.content.Context;
         import android.content.DialogInterface;
@@ -19,6 +21,7 @@ package es.upm.ssr.gatv.tfg;
         import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.Snackbar;
         import android.support.v4.app.FragmentActivity;
+        import android.support.v4.app.NotificationCompat;
         import android.support.v7.app.AlertDialog;
         import android.support.v7.app.AppCompatActivity;
         import android.support.v7.widget.Toolbar;
@@ -161,6 +164,7 @@ public class MensajesActivity extends  AppCompatActivity{
             if ((posactual - posant) > 0) {
                 if(switch_notification){
                 alarm();}
+                notify_mensajes("Nuevo Mensaje","Hay nuevo(s) mensaje(s) disponible en Mensajes");
             }
         }
     }
@@ -236,6 +240,23 @@ public class MensajesActivity extends  AppCompatActivity{
             System.out.println("OOPS");
         }
     }
+
+    private void notify_mensajes(String notificationTitle, String notificationMessage){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Intent notificationIntent = new Intent(this,MensajesActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                this);
+        Notification notification = builder.setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_action_gmail).setTicker(notificationTitle).setWhen(System.currentTimeMillis())
+                .setAutoCancel(true).setContentTitle(notificationTitle)
+                .setContentText(notificationMessage).build();
+        notificationManager.notify(8888, notification);
+
+
+    }
+
 
 
 

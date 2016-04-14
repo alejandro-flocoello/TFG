@@ -3,6 +3,7 @@ package es.upm.ssr.gatv.tfg;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,8 +18,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+
+
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +33,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
-public class VideosActivity extends  AppCompatActivity {
+public class VideosActivity extends AppCompatActivity {
 
     private AdaptadorClass mAdapter;
     private ListView entryList;
@@ -153,7 +157,8 @@ public class VideosActivity extends  AppCompatActivity {
         if ((posactual - posant) > 0) {
             if(switch_notification){
                 alarm();}
-            showNotification();
+
+            notify_video("Nuevo Video","Hay nuevo contenido disponible en Videos");
         }
     }
 }
@@ -227,43 +232,24 @@ public class VideosActivity extends  AppCompatActivity {
         }
     }
 
-    public void showNotification(){
 
 
-        // intent triggered, you can add other intent for other actions
-        Intent intent = new Intent(VideosActivity.this,null);
-        PendingIntent pIntent = PendingIntent.getActivity(VideosActivity.this, 0, intent, 0);
-
-        // this is it, we'll build the notification!
-        // in the addAction method, if you don't want any icon, just set the first param to 0
-        Notification mNotification = new Notification.Builder(this)
-
-                .setContentTitle("Nuevo Video!")
-                .setContentText("Existe nuevo contenido en videos!")
-                .setSmallIcon(R.drawable.videos_btn)
-                .setContentIntent(pIntent)
-
-
-                .addAction(R.drawable.videos_btn, "Ver", pIntent)
-                .addAction(0, "Recordar", pIntent)
-
-                .build();
-
+    private void notify_video(String notificationTitle, String notificationMessage){
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        //alarm();
-        // If you want to hide the notification after it was selected, do the code below
-        // myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
 
-        notificationManager.notify(0, mNotification);
-    }
 
-    public void cancelNotification(int notificationId){
+        Intent notificationIntent = new Intent(this,VideosActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
 
-        if (Context.NOTIFICATION_SERVICE!=null) {
-            String ns = Context.NOTIFICATION_SERVICE;
-            NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(ns);
-            nMgr.cancel(notificationId);
-        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                this);
+        Notification notification = builder.setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_videos).setTicker(notificationTitle).setWhen(System.currentTimeMillis())
+                .setAutoCancel(true).setContentTitle(notificationTitle)
+                .setContentText(notificationMessage).build();
+        notificationManager.notify(9999, notification);
+
+
     }
 
 }
