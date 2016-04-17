@@ -109,6 +109,7 @@ public class MensajesActivity extends  AppCompatActivity{
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mensajesAlarma();
     }
 
 
@@ -164,7 +165,7 @@ public class MensajesActivity extends  AppCompatActivity{
             if ((posactual - posant) > 0) {
                 if(switch_notification){
                 alarm();}
-                notify_mensajes("Nuevo Mensaje","Hay nuevo(s) mensaje(s) disponible en Mensajes");
+                notify_mensajes("Nuevo Mensaje", "Hay nuevo(s) mensaje(s) disponible en Mensajes");
             }
         }
     }
@@ -255,6 +256,15 @@ public class MensajesActivity extends  AppCompatActivity{
         notificationManager.notify(8888, notification);
 
 
+    }
+
+    public void mensajesAlarma(){
+        Intent myIntent = new Intent(this , MensajesActivity.class);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getService(MensajesActivity.this, 0, myIntent, 0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, 30);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),2*60*1000 , pendingIntent);  //set repeating every  2 minutes
     }
 
 
