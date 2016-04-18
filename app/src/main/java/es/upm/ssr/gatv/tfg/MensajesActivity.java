@@ -1,47 +1,35 @@
 package es.upm.ssr.gatv.tfg;
 
         import android.app.AlarmManager;
-        import android.app.Notification;
-        import android.app.NotificationManager;
-        import android.app.PendingIntent;
-        import android.content.Context;
-        import android.content.DialogInterface;
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.media.AudioManager;
-        import android.media.MediaPlayer;
-        import android.net.ConnectivityManager;
-        import android.net.NetworkInfo;
-        import android.net.Uri;
-        import android.os.AsyncTask;
-        import android.os.Build;
-        import android.os.Bundle;
-        import android.os.Handler;
-        import android.preference.PreferenceManager;
-        import android.support.design.widget.FloatingActionButton;
-        import android.support.design.widget.Snackbar;
-        import android.support.v4.app.FragmentActivity;
-        import android.support.v4.app.NotificationCompat;
-        import android.support.v7.app.AlertDialog;
-        import android.support.v7.app.AppCompatActivity;
-        import android.support.v7.widget.Toolbar;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.view.animation.Animation;
-        import android.view.animation.AnimationUtils;
-        import android.widget.AdapterView;
-        import android.widget.ImageView;
-        import android.widget.ListView;
-        import android.widget.Toast;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-        import java.io.FileNotFoundException;
-        import java.io.IOException;
-        import java.util.Calendar;
-        import java.util.Timer;
-        import java.util.TimerTask;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Calendar;
 
 
 public class MensajesActivity extends  AppCompatActivity{
@@ -52,8 +40,7 @@ public class MensajesActivity extends  AppCompatActivity{
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor editor;
     private int posant;
-
-
+    private ReceiverService s;
 
 
 
@@ -109,7 +96,7 @@ public class MensajesActivity extends  AppCompatActivity{
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mensajesAlarma();
+        //mensajesAlarma();
     }
 
 
@@ -259,12 +246,12 @@ public class MensajesActivity extends  AppCompatActivity{
     }
 
     public void mensajesAlarma(){
-        Intent myIntent = new Intent(this , MensajesActivity.class);
+        Intent myIntent = new Intent(this , ReceiveStartService.class);
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getService(MensajesActivity.this, 0, myIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, myIntent, 0);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, 30);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),2*60*1000 , pendingIntent);  //set repeating every  2 minutes
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 2 * 60 * 1000, pendingIntent);  //set repeating every  2 minutes
     }
 
 

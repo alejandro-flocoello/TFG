@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -115,6 +117,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="es.upm.ssr.gatv.tfg.MainActivity" />
         </activity>
+
+        <service
+            android:name="es.upm.ssr.gatv.tfg.ReceiverService"
+            android:enabled="true"/>
+        <receiver
+            android:name="es.upm.ssr.gatv.tfg.ReceiveStartService"
+            android:enabled="true" />
+
+        <receiver
+            android:name="es.upm.ssr.gatv.tfg.BroadcastReceiverGatv"
+            android:enabled="true">
+            <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
