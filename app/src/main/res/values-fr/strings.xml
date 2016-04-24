@@ -44,4 +44,5 @@
     <string name="pausa">PAUSE</string>
     <string name="escuchar">ÉCOUTER LE MESSAGE</string>
     <string name="reproducir">ÉCOUTER</string>
+    <string name="TresEnRaya">Tic Tac Toe</string>
 </resources>

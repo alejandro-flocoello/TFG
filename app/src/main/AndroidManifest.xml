@@ -117,21 +117,58 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="es.upm.ssr.gatv.tfg.MainActivity" />
         </activity>
+        <activity
+            android:name=".AcercaDe"
+            android:label="Acerca De..."
+            android:parentActivityName=".TresEnRayaMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.upm.ssr.gatv.tfg.TresEnRayaMenu" />
+        </activity>
+        <activity
+            android:name=".JuegoCpu"
+            android:label="JugarCpu"
+            android:parentActivityName=".TresEnRayaMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.upm.ssr.gatv.tfg.TresEnRayaMenu" />
+        </activity>
 
         <service
-            android:name="es.upm.ssr.gatv.tfg.ReceiverService"
-            android:enabled="true"/>
-        <receiver
-            android:name="es.upm.ssr.gatv.tfg.ReceiveStartService"
+            android:name=".ReceiverService"
             android:enabled="true" />
 
         <receiver
-            android:name="es.upm.ssr.gatv.tfg.BroadcastReceiverGatv"
+            android:name=".ReceiveStartService"
+            android:enabled="true" />
+        <receiver
+            android:name=".BroadcastReceiverGatv"
             android:enabled="true">
             <intent-filter>
-            <action android:name="android.intent.action.BOOT_COMPLETED" />
-        </intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".TresEnRayaActivity"
+            android:label="@string/title_activity_tres_en_raya"
+            android:parentActivityName=".TresEnRayaMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.upm.ssr.gatv.tfg.TresEnRayaMenu" />
+        </activity>
+        <activity
+            android:name=".TresEnRayaMenu"
+            android:label="@string/title_activity_tres_en_raya_menu"
+            android:parentActivityName=".JuegosActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.upm.ssr.gatv.tfg.JuegosActivity" />
+        </activity>
     </application>
 
 </manifest>

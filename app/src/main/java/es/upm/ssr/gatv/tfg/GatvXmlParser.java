@@ -106,6 +106,7 @@ public class GatvXmlParser {
         }
 
         // return the populated list.
+
         return entrySites;
     }
 }

@@ -45,4 +45,5 @@
     <string name="pausa">PAUSE</string>
     <string name="reproducir">PLAY</string>
     <string name="escuchar">TEXT-TO-SPEECH</string>
+    <string name="TresEnRaya">Tic Tac Toe</string>
 </resources>

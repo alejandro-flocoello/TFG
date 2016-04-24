@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/LinearLayout1"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context="es.upm.ssr.gatv.tfg.TresEnRayaMenu"
+tools:showIn="@layout/activity_tres_en_raya_menu"
+android:layout_gravity="center|center_vertical"
+android:gravity="center|top"
+android:orientation="vertical" >
+
+
+
+<TextView
+    android:id="@+id/titulo"
+    style="@style/TextoTresEnRaya"
+    android:layout_marginTop="40dp"
+    android:text="@string/title_activity_tes"
+    android:textSize="80sp"
+    tools:context=".TresEnRayaMenu" />
+
+<Button
+    style="?android:attr/buttonStyleSmall"
+    android:id="@+id/jugar"
+    android:layout_width="600dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dip"
+    android:layout_marginTop="31dp"
+    android:onClick="pulsaJugar"
+    android:text="@string/jugar_boton"
+    android:textSize="50sp" />
+
+<Button
+    style="?android:attr/buttonStyleSmall"
+    android:id="@+id/jugarCpu"
+    android:layout_width="600dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dip"
+    android:onClick="pulsaJugarCpu"
+    android:text="@string/jugar_boton_cpu"
+    android:textSize="50sp" />
+
+<Button
+    style="?android:attr/buttonStyleSmall"
+    android:id="@+id/acercaDe"
+    android:layout_width="600dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dip"
+    android:onClick="pulsaAcercaDe"
+    android:text="@string/acercade"
+    android:textSize="50sp" />
+
+<Button
+    style="?android:attr/buttonStyleSmall"
+    android:id="@+id/salir"
+    android:layout_width="600dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dip"
+    android:onClick="pulsaSalir"
+    android:text="@string/salir"
+    android:textSize="50sp" />
+
+</LinearLayout>

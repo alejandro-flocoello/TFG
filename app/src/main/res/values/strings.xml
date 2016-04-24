@@ -22,7 +22,7 @@
     <string name="PlayVideo" translatable="false">PLAY</string>
 
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="Refresh"/>
+    <string name="Refresh" />
     <string name="title_activity_show_message">Mostrando mensaje</string>
     <string name="title_activity_splash_screen" translatable="false">TFG</string>
     <string name="bckground_img" translatable="false">bckground_img</string>
@@ -166,4 +166,21 @@
     <string name="reproducir">REPRODUCIR</string>
     <string name="parar">PARAR</string>
     <string name="escuchar">ESCUCHAR MENSAJE</string>
+    <string name="TresEnRaya">Tres en Raya</string>
+    <string name="reiniciar">Volver a Empezar</string>
+    <string name="juegoAcabado">Juego Acabado</string>
+
+
+    <string name="hello_world">TresEnRaya</string>
+    <string name="menu_settings">Configurar</string>
+    <string name="title_activity_tes">Tres en Raya</string>
+    <string name="jugar_boton">Dos Jugadores</string>
+    <string name="configurar">Configurar</string>
+    <string name="acercade">Acerca De</string>
+    <string name="salir">Salir</string>
+    <string name="cruz">Ganan las Cruces</string>
+    <string name="circulo">Ganan los circulos</string>
+    <string name="jugar_boton_cpu">Jugar vs. CPU</string>
+    <string name="title_activity_tres_en_raya">Juegos: Tres en Raya</string>
+    <string name="title_activity_tres_en_raya_menu">Tres en Raya: Menu</string>
 </resources>
