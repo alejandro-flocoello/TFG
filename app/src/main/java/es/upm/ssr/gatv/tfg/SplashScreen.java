@@ -102,8 +102,4 @@ public class SplashScreen extends Activity
             }
     }
 
-
-
-
-
 }

@@ -14,7 +14,7 @@
         style="@style/TextoTresEnRaya"
         android:layout_marginTop="100dp"
         android:text="@string/title_activity_tes"
-        android:textSize="100sp"
+        android:textSize="80sp"
         tools:context=".TresEnRayaMenu" />
 
     <Button

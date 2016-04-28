@@ -245,17 +245,5 @@ public class MensajesActivity extends  AppCompatActivity{
 
     }
 
-    public void mensajesAlarma(){
-        Intent myIntent = new Intent(this , ReceiveStartService.class);
-        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0, myIntent, 0);
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 30);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 2 * 60 * 1000, pendingIntent);  //set repeating every  2 minutes
-    }
-
-
-
-
 }
 
