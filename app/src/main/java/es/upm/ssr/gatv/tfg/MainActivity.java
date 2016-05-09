@@ -1,10 +1,14 @@
 package es.upm.ssr.gatv.tfg;
 
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -32,16 +36,13 @@ public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnI
     private final Locale SPANISH = new Locale("es","ES");
     private Boolean tts_enabled = false;
     private SharedPreferences sharedPrefs;
+//    public ReceiverService s;
 
-
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         tts = new TextToSpeech(this,this);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final Drawable d = getResources().getDrawable(R.drawable.border_icon_2);
@@ -213,6 +214,31 @@ public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnI
 
     }
 
+ /*   protected void onResume(){
+        Intent intent= new Intent(this, ReceiverService.class);
+        bindService(intent, mConnection,
+                Context.BIND_AUTO_CREATE);
+        super.onResume();
+    }
+
+    protected void onPause() {
+        unbindService(mConnection);
+        super.onPause();
+    }
+
+    public ServiceConnection mConnection = new ServiceConnection() {
+
+        public void onServiceConnected(ComponentName className,IBinder binder) {
+            ReceiverService.MyBinder b = (ReceiverService.MyBinder) binder;
+            s = b.getService();
+            Log.d("Service", "Conectado");
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            s = null;
+        }
+   };*/
+
     public  void onPostResume(){
         if (tts != null){
             tts.stop();
@@ -223,36 +249,20 @@ public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnI
         super.onPostResume();
     }
 
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent i = new Intent(this, SettingsActivity.class);
             startActivityForResult(i, RESULT_SETTINGS);
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-
-
-    /**
-     * Called when the user clicks the Send button
-     */
     public void muestraVideos(View view) {
         // Do something in response to button Videos
         Intent intent = new Intent(this, VideosActivity.class);
@@ -289,8 +299,6 @@ public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnI
         startActivity(intent);
     }
 
-    //Inicia TTS
-    @Override
     public void onInit(int status) {
 
         if ( status == TextToSpeech.SUCCESS ) {
@@ -330,15 +338,10 @@ public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnI
         }
     }
 
-
     private void sintetiza( String texto ) {
         tts.speak(texto, TextToSpeech.QUEUE_ADD, null);
 
     }
-
-    //Cuando se cierra la aplicacion se destruye el TTS
-    @Override
-
 
     protected void onDestroy() {
         if (tts != null) {
@@ -347,6 +350,4 @@ public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnI
         }
         super.onDestroy();
     }
-
-
 }

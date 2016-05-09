@@ -11,7 +11,6 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TextView;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,7 +20,8 @@ public class SplashScreen extends Activity
     private static final long DELAY = 4000;
     private boolean scheduled = false;
     private Timer splashTimer;
-    private ReceiverService s;
+    public ReceiverService s;
+
 
 
     @Override
@@ -41,16 +41,15 @@ public class SplashScreen extends Activity
             }
         }, DELAY);
         scheduled = true;
-        cargaInicioPrefs();
-        comiezaServicio();
+
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (scheduled)
             splashTimer.cancel();
         splashTimer.purge();
+        super.onDestroy();
     }
 
     public void cargaInicioPrefs(){
@@ -67,39 +66,28 @@ public class SplashScreen extends Activity
         }
     }
 
-
-    protected void onResume() {
-        super.onResume();
+    protected void onResume(){
         Intent intent= new Intent(this, ReceiverService.class);
         bindService(intent, mConnection,
                 Context.BIND_AUTO_CREATE);
+        super.onResume();
     }
+
     protected void onPause() {
-        super.onPause();
         unbindService(mConnection);
+        super.onPause();
     }
 
+    public ServiceConnection mConnection = new ServiceConnection() {
 
-    private ServiceConnection mConnection = new ServiceConnection() {
-
-        public void onServiceConnected(ComponentName className,
-                                       IBinder binder) {
+        public void onServiceConnected(ComponentName className, IBinder binder) {
             ReceiverService.MyBinder b = (ReceiverService.MyBinder) binder;
             s = b.getService();
-            Log.d("Splash Service", "Conectado");
-
+            Log.d("Service", "Conectado");
         }
 
         public void onServiceDisconnected(ComponentName className) {
             s = null;
         }
     };
-
-
-    public void comiezaServicio(){
-            if (s != null) {
-                s.comienza();
-            }
-    }
-
 }

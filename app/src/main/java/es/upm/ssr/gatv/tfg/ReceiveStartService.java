@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.Context;
+import android.util.Log;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -18,7 +19,4 @@ public class ReceiveStartService extends BroadcastReceiver {
         Intent service = new Intent(context, ReceiverService.class);
         context.startService(service);
     }
-
-
-
 }

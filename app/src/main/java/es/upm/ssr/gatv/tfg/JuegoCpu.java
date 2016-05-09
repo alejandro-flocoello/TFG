@@ -2,1689 +2,362 @@ package es.upm.ssr.gatv.tfg;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.media.MediaPlayer;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
-import es.upm.ssr.gatv.tfg.R;
 
-public class JuegoCpu extends AppCompatActivity{
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
-    private TextView x1;
-    private TextView x2;
-    private TextView x3;
-    private TextView x4;
-    private TextView x5;
-    private TextView x6;
-    private TextView x7;
-    private TextView x8;
-    private TextView x9;
-    private String casilla1=new String("-1");
-    private String casilla2=new String("-1");
-    private String casilla3=new String("-1");
-    private String casilla4=new String("-1");
-    private String casilla5=new String("-1");
-    private String casilla6=new String("-1");
-    private String casilla7=new String("-1");
-    private String casilla8=new String("-1");
-    private String casilla9=new String("-1");
-    private String mensaje;
-    private String titulo;
-    private String aceptar;
-    private int pulsadas;
-    private TextView xborrar;
-    private int jugador=0;
-    private int contador=0;
-    private MediaPlayer mp;
-    private TextView ventanaFin;
-    private String Textofinal;
+public class JuegoCpu extends AppCompatActivity {
+
+    private String casilla1 = new String("-1");
+    private String casilla2 = new String("-1");
+    private String casilla3 = new String("-1");
+    private String casilla4 = new String("-1");
+    private String casilla5 = new String("-1");
+    private String casilla6 = new String("-1");
+    private String casilla7 = new String("-1");
+    private String casilla8 = new String("-1");
+    private String casilla9 = new String("-1");
     private Random random = new Random();
 
-    public void onCreate(Bundle savedInstanceState) {
+    private boolean noughtsTurn = false; // Who's turn is it? false=X true=O
+    private char board[][] = new char[3][3]; // for now we will represent the board as an array of characters
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tres_en_raya);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        setContentView(R.layout.extra);
-
-        this.x1 = (TextView) findViewById(R.id.x1);
-        this.x2 = (TextView) findViewById(R.id.x2);
-        this.x3 = (TextView) findViewById(R.id.x3);
-        this.x4 = (TextView) findViewById(R.id.x4);
-        this.x5 = (TextView) findViewById(R.id.x5);
-        this.x6 = (TextView) findViewById(R.id.x6);
-        this.x7 = (TextView) findViewById(R.id.x7);
-        this.x8 = (TextView) findViewById(R.id.x8);
-        this.x9 = (TextView) findViewById(R.id.x9);
-        this.xborrar = (TextView) findViewById(R.id.xborrar);
-        this.ventanaFin= (TextView) findViewById(R.id.juegoFin);
-
-
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setupOnClickListeners();
+        resetButtons();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    public void pulsax1(View view){
+    /**
+     * Called when you press new game.
+     *
+     * @param view the New Game Button
+     */
+    public void newGame(View view) {
+        noughtsTurn = false;
+        board = new char[3][3];
+        resetButtons();
+    }
 
-        mp.start();
-
-        if(this.jugador==0 && view.isClickable()){
-            this.casilla1="X";
-            this.x1.setBackgroundResource(R.drawable.cruz);
-            this.x1.setClickable(false);
-
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-
-                if(fin==0){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Crosses";
-                        titulo="Game Over";
-                        aceptar="Accept";
+    /**
+     * Reset each button in the grid to be blank and enabled.
+     */
+    private void resetButtons() {
+        final Drawable c_vacia = getResources().getDrawable(R.drawable.casilla_vacia);
+        TableLayout T = (TableLayout) findViewById(R.id.tableLayout);
+        for (int y = 0; y < T.getChildCount(); y++) {
+            if (T.getChildAt(y) instanceof TableRow) {
+                TableRow R = (TableRow) T.getChildAt(y);
+                for (int x = 0; x < R.getChildCount(); x++) {
+                    if (R.getChildAt(x) instanceof Button) {
+                        Button B = (Button) R.getChildAt(x);
+                        B.setBackground(c_vacia);
+                        B.setEnabled(true);
                     }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan las Cruces";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
                 }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
             }
-
-            this.jugador=1;
-            juegaCpu();
-
         }
-        else if (this.jugador==1){
-            this.casilla1="0";
-            this.x1.setBackgroundResource(R.drawable.circulo);
-            this.x1.setClickable(false);
-            int fin= this.juegoAcabado();
+        TextView t = (TextView) findViewById(R.id.titleText);
+        t.setText(R.string.title_activity_tes);
+    }
 
-            if(fin!=-1){
-                if(fin==1){
+    /**
+     * Method that returns true when someone has won and false when nobody has.<br />
+     * It also display the winner on screen.
+     *
+     * @return
+     */
+    private boolean checkWin() {
 
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Circles";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan los Circulos";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
+        char winner = '\0';
+        if (checkWinner(board, 3, 'X')) {
+            winner = 'X';
+        } else if (checkWinner(board, 3, 'O')) {
+            winner = 'O';
+        }
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-            }
-            this.jugador=0;
-
+        if (winner == '\0') {
+            return false; // nobody won
+        } else {
+            // display winner
+            TextView T = (TextView) findViewById(R.id.titleText);
+            T.setText(winner + " gana");
+            return true;
         }
     }
 
-    public void pulsax2(View view){
 
-        mp.start();
-
-        if(this.jugador==0 && view.isClickable()){
-            this.casilla2="X";
-            this.x2.setBackgroundResource(R.drawable.cruz);
-            this.x2.setClickable(false);
-
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==0){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Crosses";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan las Cruces";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
+    /**
+     * This is a generic algorithm for checking if a specific player has won on a tic tac toe board of any size.
+     *
+     * @param board  the board itself
+     * @param size   the width and height of the board
+     * @param player the player, 'X' or 'O'
+     * @return true if the specified player has won
+     */
+    private boolean checkWinner(char[][] board, int size, char player) {
+        // check each column
+        for (int x = 0; x < size; x++) {
+            int total = 0;
+            for (int y = 0; y < size; y++) {
+                if (board[x][y] == player) {
+                    total++;
                 }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
             }
-
-            this.jugador=1;
-            juegaCpu();
-
-        }
-        else if(this.jugador==1){
-            this.casilla2="0";
-            this.x2.setBackgroundResource(R.drawable.circulo);
-            this.x2.setClickable(false);
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==1){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Circles";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan los Circulos";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
+            if (total >= size) {
+                return true; // they win
             }
-            this.jugador=0;
-
         }
 
-    }
-    public void pulsax3(View view){
-
-        mp.start();
-
-        if(this.jugador==0 && view.isClickable()){
-            this.casilla3="X";
-            this.x3.setBackgroundResource(R.drawable.cruz);
-            this.x3.setClickable(false);
-
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==0){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Crosses";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan las Cruces";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
+        // check each row
+        for (int y = 0; y < size; y++) {
+            int total = 0;
+            for (int x = 0; x < size; x++) {
+                if (board[x][y] == player) {
+                    total++;
                 }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
             }
-            this.jugador=1;
-            juegaCpu();
-
-        }
-        else if (this.jugador==1){
-            this.casilla3="0";
-            this.x3.setBackgroundResource(R.drawable.circulo);
-            this.x3.setClickable(false);
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==1){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Circles";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan los Circulos";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
+            if (total >= size) {
+                return true; // they win
             }
-            this.jugador=0;
-
         }
 
-    }
-    public void pulsax4(View view){
-
-        mp.start();
-
-        if(this.jugador==0 && view.isClickable()){
-            this.casilla4="X";
-            this.x4.setBackgroundResource(R.drawable.cruz);
-            this.x4.setClickable(false);
-
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==0){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Crosses";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan las Cruces";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
+        // forward diag
+        int total = 0;
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                if (x == y && board[x][y] == player) {
+                    total++;
                 }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
             }
-            this.jugador=1;
-            juegaCpu();
         }
-        else if (this.jugador==1){
-            this.casilla4="0";
-            this.x4.setBackgroundResource(R.drawable.circulo);
-            this.x4.setClickable(false);
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==1){
+        if (total >= size) {
+            return true; // they win
+        }
 
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Circles";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan los Circulos";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
+        // backward diag
+        total = 0;
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                if (x + y == size - 1 && board[x][y] == player) {
+                    total++;
                 }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
             }
-            this.jugador=0;
-
+        }
+        if (total >= size) {
+            return true; // they win
         }
 
-
-    }
-    public void pulsax5(View view){
-
-        mp.start();
-
-        if(this.jugador==0 && view.isClickable()){
-            this.casilla5="X";
-            this.x5.setBackgroundResource(R.drawable.cruz);
-            this.x5.setClickable(false);
-
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==0){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Crosses";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan las Cruces";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
-            }
-            this.jugador=1;
-            juegaCpu();
-
-        }
-        else if (this.jugador==1){
-            this.casilla5="0";
-            this.x5.setBackgroundResource(R.drawable.circulo);
-            this.x5.setClickable(false);
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==1){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Circles";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan los Circulos";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-            }
-            this.jugador=0;
-
-        }
-
-
-    }
-    public void pulsax6(View view){
-
-        mp.start();
-
-        if(this.jugador==0 && view.isClickable()){
-            this.casilla6="X";
-            this.x6.setBackgroundResource(R.drawable.cruz);
-            this.x6.setClickable(false);
-
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==0){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Crosses";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan las Cruces";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
-            }
-            this.jugador=1;
-            juegaCpu();
-
-        }
-        else if (this.jugador==1){
-            this.casilla6="0";
-            this.x6.setBackgroundResource(R.drawable.circulo);
-            this.x6.setClickable(false);
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==1){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Circles";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan los Circulos";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-            }
-            this.jugador=0;
-
-        }
-
-
-    }
-    public void pulsax7(View view){
-
-        mp.start();
-
-        if(this.jugador==0 && view.isClickable()){
-            this.casilla7="X";
-            this.x7.setBackgroundResource(R.drawable.cruz);
-            this.x7.setClickable(false);
-
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==0){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Crosses";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan las Cruces";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
-            }
-            this.jugador=1;
-            juegaCpu();
-
-        }
-        else if (this.jugador==1){
-            this.casilla7="0";
-            this.x7.setBackgroundResource(R.drawable.circulo);
-            this.x7.setClickable(false);
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==1){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Circles";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan los Circulos";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-            }
-            this.jugador=0;
-
-        }
-
-
-    }
-    public void pulsax8(View view){
-
-        mp.start();
-
-        if(this.jugador==0 && view.isClickable()){
-            this.casilla8="X";
-            this.x8.setBackgroundResource(R.drawable.cruz);
-            this.x8.setClickable(false);
-
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==0){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Crosses";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan las Cruces";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
-            }
-            this.jugador=1;
-            juegaCpu();
-
-        }
-        else if (this.jugador==1){
-            this.casilla8="0";
-            this.x8.setBackgroundResource(R.drawable.circulo);
-            this.x8.setClickable(false);
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==1){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Circles";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan los Circulos";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-            }
-            this.jugador=0;
-
-        }
-
-
-    }
-    public void pulsax9(View view){
-
-        mp.start();
-
-        if(this.jugador==0 && view.isClickable()){
-            this.casilla9="X";
-            this.x9.setBackgroundResource(R.drawable.cruz);
-            this.x9.setClickable(false);
-
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==0){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Crosses";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan las Cruces";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-
-                }
-
-            }
-            this.jugador=1;
-            juegaCpu();
-
-        }
-        else if (this.jugador==1){
-            this.casilla9="0";
-            this.x9.setBackgroundResource(R.drawable.circulo);
-            this.x9.setClickable(false);
-            int fin= this.juegoAcabado();
-            if(fin!=-1){
-                if(fin==1){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="Win Circles";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Ganan los Circulos";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-                else if(fin==2){
-
-                    if (this.ventanaFin.getText().equals("EN")){
-                        mensaje="They tied";
-                        titulo="Game Over";
-                        aceptar="Accept";
-                    }
-                    else if(this.ventanaFin.getText().equals("ES")){
-                        mensaje="Han Empatado";
-                        titulo="Juego Acabado";
-                        aceptar="Aceptar";
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(mensaje)
-                            .setTitle(titulo)
-                            .setCancelable(false)
-                            .setNeutralButton(aceptar,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-
-            }
-            this.jugador=0;
-
-        }
-
-
-    }
-    public void pulsaxborrar(View view){
-
-        mp.start();
-
-        this.casilla1="-1";
-        this.x1.setBackgroundResource(R.drawable.casilla_vacia);
-        this.x1.setClickable(true);
-
-        this.casilla2="-1";
-        this.x2.setBackgroundResource(R.drawable.casilla_vacia);
-        this.x2.setClickable(true);
-
-        this.casilla3="-1";
-        this.x3.setBackgroundResource(R.drawable.casilla_vacia);
-        this.x3.setClickable(true);
-
-        this.casilla4="-1";
-        this.x4.setBackgroundResource(R.drawable.casilla_vacia);
-        this.x4.setClickable(true);
-
-        this.casilla5="-1";
-        this.x5.setBackgroundResource(R.drawable.casilla_vacia);
-        this.x5.setClickable(true);
-
-        this.casilla6="-1";
-        this.x6.setBackgroundResource(R.drawable.casilla_vacia);
-        this.x6.setClickable(true);
-
-        this.casilla7="-1";
-        this.x7.setBackgroundResource(R.drawable.casilla_vacia);
-        this.x7.setClickable(true);
-
-        this.casilla8="-1";
-        this.x8.setBackgroundResource(R.drawable.casilla_vacia);
-        this.x8.setClickable(true);
-
-        this.casilla9="-1";
-        this.x9.setBackgroundResource(R.drawable.casilla_vacia);
-        this.x9.setClickable(true);
-
-        if(contador==0){
-            this.jugador=1;
-            juegaCpu();
-            contador=1;
-        }
-        else if (contador==1){
-            this.jugador=0;
-            contador=0;
-        }
-
-
+        return false; // nobody won
     }
 
-    public void fin(){
-
-
-        this.x1.setClickable(false);
-
-        this.x2.setClickable(false);
-
-        this.x3.setClickable(false);
-
-        this.x4.setClickable(false);
-
-        this.x5.setClickable(false);
-
-        this.x6.setClickable(false);
-
-        this.x7.setClickable(false);
-
-        this.x8.setClickable(false);
-
-        this.x9.setClickable(false);
-
-
+    /**
+     * Disables all the buttons in the grid.
+     */
+    private void disableButtons() {
+        TableLayout T = (TableLayout) findViewById(R.id.tableLayout);
+        for (int y = 0; y < T.getChildCount(); y++) {
+            if (T.getChildAt(y) instanceof TableRow) {
+                TableRow R = (TableRow) T.getChildAt(y);
+                for (int x = 0; x < R.getChildCount(); x++) {
+                    if (R.getChildAt(x) instanceof Button) {
+                        Button B = (Button) R.getChildAt(x);
+                        B.setEnabled(false);
+                    }
+                }
+            }
+        }
     }
 
-    public int juegoAcabado(){
-
-		 /* Diagonales */
-        if(!this.x1.isClickable() && !this.x5.isClickable()  && !this.x9.isClickable()
-                && this.casilla1.equals(this.casilla5) && this.casilla1.equals(this.casilla9)){
-            this.fin();
-            return jugador;
+    /**
+     * This will add the OnClickListener to each button inside out TableLayout
+     */
+    private void setupOnClickListeners() {
+        TableLayout T = (TableLayout) findViewById(R.id.tableLayout);
+        for (int y = 0; y < T.getChildCount(); y++) {
+            if (T.getChildAt(y) instanceof TableRow) {
+                TableRow R = (TableRow) T.getChildAt(y);
+                for (int x = 0; x < R.getChildCount(); x++) {
+                    View V = R.getChildAt(x); // In our case this will be each button on the grid
+                    V.setOnClickListener(new PlayOnClick(x, y));
+                }
+            }
         }
-        if(!this.x3.isClickable() && !this.x5.isClickable()  && !this.x7.isClickable()
-                && this.casilla3.equals(this.casilla5)&& this.casilla3.equals(this.casilla7)){
-
-            this.fin();
-            return jugador;
-        }
-
-		/* Horizontales */
-        if(!this.x1.isClickable() && !this.x2.isClickable()  && !this.x3.isClickable()
-                && this.casilla1.equals(this.casilla2) && this.casilla1.equals(this.casilla3)){
-
-            this.fin();
-            return jugador;
-        }
-
-        if(!this.x4.isClickable() && !this.x5.isClickable()  && !this.x6.isClickable()
-                && this.casilla4.equals(this.casilla5) && this.casilla4.equals(this.casilla6)){
-
-            this.fin();
-            return jugador;
-        }
-
-        if(!this.x7.isClickable() && !this.x8.isClickable()  && !this.x9.isClickable()
-                && this.casilla7.equals(this.casilla8) && this.casilla7.equals(this.casilla9)){
-
-            this.fin();
-            return jugador;
-        }
-
-			/* Verticales */
-
-        if(!this.x1.isClickable() && !this.x4.isClickable()  && !this.x7.isClickable()
-                && this.casilla1.equals(this.casilla4) && this.casilla1.equals(this.casilla7)){
-
-            this.fin();
-            return jugador;
-        }
-
-        if(!this.x2.isClickable() && !this.x5.isClickable()  && !this.x8.isClickable()
-                && this.casilla2.equals(this.casilla5) && this.casilla2.equals(this.casilla8)){
-
-            this.fin();
-            return jugador;
-        }
-
-        if(!this.x3.isClickable() && !this.x6.isClickable()  && !this.x9.isClickable()
-                && this.casilla3.equals(this.casilla6) && this.casilla3.equals(this.casilla9)){
-
-            this.fin();
-            return jugador;
-        }
-
-        if(!this.x1.isClickable() && !this.x3.isClickable()  && !this.x3.isClickable()
-                && !this.x4.isClickable() && !this.x5.isClickable()  && !this.x6.isClickable()
-                && !this.x7.isClickable() && !this.x8.isClickable()  && !this.x9.isClickable() ){
-
-            this.fin();
-            return 2;//empate
-        }
-
-        return -1;//continua el juego
-
     }
 
     @Override
-    public void onResume() {
-        if(mp == null){
-            mp = MediaPlayer.create(getBaseContext(), R.raw.click_casilla);
-        }
+    public void onStart() {
+        super.onStart();
 
-        super.onResume();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "JuegoCpu Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://es.upm.ssr.gatv.tfg/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
     }
 
     @Override
     public void onStop() {
-        mp.release();
-        mp = null;
-
         super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "JuegoCpu Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://es.upm.ssr.gatv.tfg/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 
-    public String mejorCasilla(String jugador){
+    /**
+     * Custom OnClickListener for Noughts and Crosses<br />
+     * Each Button for Noughts and Crosses has a position we need to take into account
+     *
+     * @author Lyndon Armitage
+     */
+    private class PlayOnClick implements View.OnClickListener {
 
-        if(this.x1.isClickable()){
-            if ((casilla2.equals(jugador) && casilla3.equals(jugador)) ||
-                    (casilla4.equals(jugador) && casilla7.equals(jugador)) ||
-                    (casilla5.equals(jugador) && casilla9.equals(jugador))) {
-                return "casilla1";
+        private int x = 0;
+        private int y = 0;
+
+        public PlayOnClick(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            final Drawable cruz = getResources().getDrawable(R.drawable.cruz);
+            final Drawable o = getResources().getDrawable(R.drawable.circulo);
+
+            if (view instanceof Button) {
+                Button B = (Button) view;
+                board[x][y] = noughtsTurn ? 'O' : 'X';
+                B.setBackground(noughtsTurn ? o : cruz);
+                B.setEnabled(false);
+                noughtsTurn = !noughtsTurn;
+                if (!noughtsTurn) {
+                    juegaCpu();
+                }
+                // check if anyone has won
+                if (checkWin()) {
+                    disableButtons();
+                }
             }
-        }
-
-        if(this.x2.isClickable()){
-            if ((casilla1.equals(jugador) && casilla3.equals(jugador)) ||
-                    (casilla5.equals(jugador) && casilla8.equals(jugador))) {
-                return "casilla2";
-            }
-        }
-        if(this.x3.isClickable()){
-            if ((casilla1.equals(jugador) && casilla2.equals(jugador)) ||
-                    (casilla6.equals(jugador) && casilla9.equals(jugador)) ||
-                    (casilla5.equals(jugador) && casilla7.equals(jugador))) {
-                return "casilla3";
-            }
-        }
-        if(this.x4.isClickable()){
-            if ((casilla1.equals(jugador) && casilla7.equals(jugador)) ||
-                    (casilla5.equals(jugador) && casilla6.equals(jugador))) {
-                return "casilla4";
-            }
-        }
-
-        if(this.x5.isClickable()){
-
-            if ((casilla2.equals(jugador) && casilla8.equals(jugador)) ||
-                    (casilla3.equals(jugador) && casilla7.equals(jugador)) ||
-                    (casilla4.equals(jugador) && casilla6.equals(jugador))||
-                    (casilla1.equals(jugador) && casilla9.equals(jugador))) {
-                return "casilla5";
-            }
-        }
-        if(this.x6.isClickable()){
-            if ((casilla3.equals(jugador) && casilla9.equals(jugador)) ||
-                    (casilla4.equals(jugador) && casilla5.equals(jugador))) {
-                return "casilla6";
-            }
-        }
-        if(this.x7.isClickable()){
-            if ((casilla1.equals(jugador) && casilla4.equals(jugador)) ||
-                    (casilla8.equals(jugador) && casilla9.equals(jugador)) ||
-                    (casilla5.equals(jugador) && casilla3.equals(jugador))) {
-                return "casilla7";
-            }
-        }
-        if(this.x8.isClickable()){
-            if ((casilla7.equals(jugador) && casilla9.equals(jugador)) ||
-                    (casilla2.equals(jugador) && casilla5.equals(jugador))) {
-                return "casilla8";
-            }
-        }
-        if(this.x9.isClickable()){
-            if ((casilla3.equals(jugador) && casilla6.equals(jugador)) ||
-                    (casilla1.equals(jugador) && casilla5.equals(jugador))||
-                    (casilla8.equals(jugador) && casilla7.equals(jugador))) {
-                return "casilla9";
-            }
-        }
-
-        return "-1";
-    }
-
-    public String casillaAleatoria(){
-
-        List<Integer> casillasVacias = new ArrayList<Integer>();
-
-        if(this.x1.isClickable()){
-            casillasVacias.add(1);
-        }
-
-
-        if(this.x2.isClickable()){
-            casillasVacias.add(2);
-        }
-
-
-        if(this.x3.isClickable()){
-            casillasVacias.add(3);
-        }
-
-
-        if(this.x4.isClickable()){
-            casillasVacias.add(4);
-        }
-
-
-        if(this.x5.isClickable()){
-            casillasVacias.add(5);
-        }
-
-
-        if(this.x6.isClickable()){
-            casillasVacias.add(6);
-        }
-
-
-        if(this.x7.isClickable()){
-            casillasVacias.add(7);
-        }
-
-
-        if(this.x8.isClickable()){
-            casillasVacias.add(8);
-        }
-
-
-        if(this.x9.isClickable()){
-            casillasVacias.add(9);
-        }
-
-        int index = random.nextInt(casillasVacias.size());
-
-        return "casilla"+casillasVacias.get(index);
-    }
-
-    public void juegaCpu(){
-
-        String i=mejorCasilla("0");
-
-        if(i.equals("-1")){
-            i=mejorCasilla("X");
-
-            if(i.equals("-1")){
-                i=casillaAleatoria();
-
-            }
-        }
-
-        if(i.equals("casilla1")){
-            pulsax1(null);
-        }
-        else if(i.equals("casilla2")){
-            pulsax2(null);
-        }
-        else if(i.equals("casilla3")){
-            pulsax3(null);
-        }
-        else if(i.equals("casilla4")){
-            pulsax4(null);
-        }
-        else if(i.equals("casilla5")){
-            pulsax5(null);
-        }
-        else if(i.equals("casilla6")){
-            pulsax6(null);
-        }
-        else if(i.equals("casilla7")){
-            pulsax7(null);
-        }
-        else if(i.equals("casilla8")){
-            pulsax8(null);
-        }
-        else if(i.equals("casilla9")){
-            pulsax9(null);
         }
     }
 
+    public char mejorCasilla() {
+
+        TableLayout T = (TableLayout) findViewById(R.id.tableLayout);
+        for (int y = 0; y < T.getChildCount(); y++) {
+            if (T.getChildAt(y) instanceof TableRow) {
+                TableRow R = (TableRow) T.getChildAt(y);
+                for (int x = 0; x < R.getChildCount(); x++) {
+                    if (R.getChildAt(x) instanceof Button) {
+                        Button B = (Button) R.getChildAt(x);
+                        if (B.isClickable()) {
+                            return board[x][y];
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    public char casillaAleatoria() {
+
+        char casillasVacias[][] = new char[3][3];
+
+
+        TableLayout T = (TableLayout) findViewById(R.id.tableLayout);
+        for (int y = 0; y < T.getChildCount(); y++) {
+            if (T.getChildAt(y) instanceof TableRow) {
+                TableRow R = (TableRow) T.getChildAt(y);
+                for (int x = 0; x < R.getChildCount(); x++) {
+                    if (R.getChildAt(x) instanceof Button) {
+                        Button B = (Button) R.getChildAt(x);
+                        if (B.isClickable()) {
+                            return (casillasVacias[x][y]);
+                        }
+                    }
+                }
+            }
+        }
+        int column = random.nextInt(3);
+        int file = random.nextInt(3);
+        return board[column][file];
+    }
+
+    public void juegaCpu() {
+        char i = mejorCasilla();
+        if (i  == '\0') {
+            i = mejorCasilla();
+
+        }else{
+            i = casillaAleatoria();
+        }
+    }
 }
 
 
