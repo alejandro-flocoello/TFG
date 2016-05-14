@@ -1,10 +1,12 @@
 package es.upm.ssr.gatv.tfg;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,12 +24,19 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
 
 
 public class AlarmaActivity  extends AppCompatActivity{
     private static final String DEBUG_TAG = "NetworkStatus";
     private static final String TAG = "Alarma";
     String http = "http://138.4.47.33:2103/afc/home/alarma.php";
+    Calendar cal ;
+    String msgInitial;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +54,11 @@ public class AlarmaActivity  extends AppCompatActivity{
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        cal = Calendar.getInstance();
+        SharedPreferences sharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        msgInitial = sharedPrefs.getString("example_text","USUARIO");
 
         if(isNetworkAvailable()){
             Log.i("EntryList", "comienza download AlarmaTask");
@@ -79,9 +93,11 @@ public class AlarmaActivity  extends AppCompatActivity{
 
                 URL url = new URL(http);
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("rate", "4585");
+                jsonObject.put("user", msgInitial);
+                Log.d("Alarma_user",msgInitial);
+                jsonObject.put("fecha",String.valueOf( cal.getTime()));
+                Log.d("Alarma_Date", String.valueOf(cal.getTime()));
                 String message = jsonObject.toString();
-
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000 /*milliseconds*/);
                 conn.setConnectTimeout(15000 /* milliseconds */);
