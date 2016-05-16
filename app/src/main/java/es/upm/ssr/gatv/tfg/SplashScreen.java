@@ -21,13 +21,10 @@ import java.util.TimerTask;
 public class SplashScreen extends Activity
 {
     public static final String DEBUG_SPLASH = "ShowMessage" ;
-    private static final long REPEAT_TIME = 1000 * 60;
+    public Integer repeat_time = 30;
     private static final long DELAY = 4000;
     private boolean scheduled = false;
     private Timer splashTimer;
-//    public ReceiverService s;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,43 +59,13 @@ public class SplashScreen extends Activity
                     .getDefaultSharedPreferences(this);
             String msgInitial = sharedPrefs.getString("example_text","USUARIO");
             Log.d(DEBUG_SPLASH, "Usuario:" + msgInitial);
+            repeat_time = Integer.parseInt(sharedPrefs.getString("sync_frequency", "30"));
+            Log.d(DEBUG_SPLASH,"Sync:" + Integer.toString(repeat_time));
             String bienvenido = getString(R.string.splashText);
             splashText.setText(bienvenido +"\n"+ msgInitial);
         } catch (Exception e){
 
         }
-    }
-
-//    protected void onResume(){
-//        Intent intent= new Intent(this, ReceiverService.class);
-//        bindService(intent, mConnection,
-//                Context.BIND_AUTO_CREATE);
-//        super.onResume();
-//    }
-//
-//    protected void onPause() {
-//        unbindService(mConnection);
-//        super.onPause();
-//    }
-//
-//    public ServiceConnection mConnection = new ServiceConnection() {
-//
-//        public void onServiceConnected(ComponentName className, IBinder binder) {
-//            ReceiverService.MyBinder b = (ReceiverService.MyBinder) binder;
-//            s = b.getService();
-//            Log.d("Service", "Conectado");
-//        }
-//
-//        public void onServiceDisconnected(ComponentName className) {
-//            s = null;
-//        }
-//    };
-
-    // Launching the service
-    public void onStartService(View v) {
-        Intent i = new Intent(this, MyTestService.class);
-        i.putExtra("foo", "bar");
-        startService(i);
     }
 
     @Override
@@ -142,6 +109,6 @@ public class SplashScreen extends Activity
         // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
         // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
         alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis,
-                REPEAT_TIME, pIntent);
+                repeat_time*60000, pIntent);
     }
 }

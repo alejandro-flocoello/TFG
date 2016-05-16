@@ -31,7 +31,6 @@ public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnI
     private final Locale SPANISH = new Locale("es","ES");
     private Boolean tts_enabled = false;
     private SharedPreferences sharedPrefs;
-//    public ReceiverService s;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,31 +208,6 @@ public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnI
 
     }
 
- /*   protected void onResume(){
-        Intent intent= new Intent(this, ReceiverService.class);
-        bindService(intent, mConnection,
-                Context.BIND_AUTO_CREATE);
-        super.onResume();
-    }
-
-    protected void onPause() {
-        unbindService(mConnection);
-        super.onPause();
-    }
-
-    public ServiceConnection mConnection = new ServiceConnection() {
-
-        public void onServiceConnected(ComponentName className,IBinder binder) {
-            ReceiverService.MyBinder b = (ReceiverService.MyBinder) binder;
-            s = b.getService();
-            Log.d("Service", "Conectado");
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            s = null;
-        }
-   };*/
-
     public  void onPostResume(){
         if (tts != null){
             tts.stop();
@@ -314,9 +288,6 @@ public class MainActivity  extends AppCompatActivity implements TextToSpeech.OnI
                     result = tts.setLanguage(Locale.getDefault());
                     break;
             }
-
-
-            //coloca lenguaje por defecto en el celular, en nuestro caso el lenguaje es aspañol ;)
 
             Log.d("Idioma", result.toString());
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {

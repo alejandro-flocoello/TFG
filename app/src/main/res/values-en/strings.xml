@@ -46,4 +46,5 @@
     <string name="reproducir">PLAY</string>
     <string name="escuchar">TEXT-TO-SPEECH</string>
     <string name="TresEnRaya">Tic Tac Toe</string>
+    <string name="alarm_msg">A message has been sent to the server.</string>
 </resources>

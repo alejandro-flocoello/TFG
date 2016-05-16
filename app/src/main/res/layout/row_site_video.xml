@@ -31,7 +31,7 @@
         android:layout_toRightOf="@id/iconImg"
         android:textSize="14sp"
         android:layout_below="@id/nameTxt"
-        android:maxLength="250"
+        android:maxLength="350"
         android:maxLines="2"
         android:layout_marginRight="100dp"
         android:layout_marginLeft="20dp"

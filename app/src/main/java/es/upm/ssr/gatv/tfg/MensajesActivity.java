@@ -40,7 +40,6 @@ public class MensajesActivity extends  AppCompatActivity{
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor editor;
     private int posant;
-    private ReceiverService s;
 
 
 
@@ -96,7 +95,7 @@ public class MensajesActivity extends  AppCompatActivity{
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //mensajesAlarma();
+
     }
 
 

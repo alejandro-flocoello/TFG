@@ -102,7 +102,7 @@
         android:background="@drawable/border_icon"
         android:layout_gravity="center"
         android:layout_marginRight="450dp"
-        android:src="@drawable/alarm_btn"
+        android:src="@drawable/alarma_1"
         android:layout_marginTop="180dp"
         android:scaleType="centerCrop"
         android:paddingTop="0dp"

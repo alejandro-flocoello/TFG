@@ -135,24 +135,6 @@
                 android:value="es.upm.ssr.gatv.tfg.TresEnRayaMenu" />
         </activity>
 
-        <!--<receiver-->
-            <!--android:name=".BroadcastReceiverGatv"-->
-            <!--android:enabled="true"-->
-            <!--android:permission="android.permission.RECEIVE_BOOT_COMPLETED">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
-
-        <!--<service-->
-            <!--android:name=".ReceiverService"-->
-            <!--android:enabled="true" />-->
-
-        <!--<receiver-->
-            <!--android:name=".ReceiveStartService"-->
-            <!--android:enabled="true"-->
-            <!--android:process=":remote" />-->
-
         <activity
             android:name=".TresEnRayaActivity"
             android:label="@string/title_activity_tres_en_raya"

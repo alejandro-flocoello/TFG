@@ -88,16 +88,12 @@
 
     <string name="pref_title_sync_frequency">Frecuencia de sincronización</string>
     <string-array name="pref_sync_frequency_titles">
-        <item>15 minutos</item>
-        <item>30 minutos</item>
         <item>1 hora</item>
         <item>3 horas</item>
         <item>6 horas</item>
         <item>Nunca</item>
     </string-array>
     <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
         <item>60</item>
         <item>180</item>
         <item>360</item>
@@ -183,4 +179,5 @@
     <string name="jugar_boton_cpu">Jugar vs. CPU</string>
     <string name="title_activity_tres_en_raya">Juegos: Tres en Raya</string>
     <string name="title_activity_tres_en_raya_menu">Tres en Raya: Menu</string>
+    <string name="alarm_msg">Se ha enviado un mensaje de alarma al servidor.</string>
 </resources>

@@ -11,18 +11,4 @@
     tools:context="es.upm.ssr.gatv.tfg.AlarmaActivity"
     tools:showIn="@layout/activity_alarma">
 
-
-    <TextView
-        android:layout_width="800dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/textAlarmaMensaje"
-        android:textSize="70sp"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:text="@string/alarm_msg"
-        android:typeface="sans"
-        android:gravity="center"
-        android:padding="10dp" />
-
-
 </RelativeLayout>
