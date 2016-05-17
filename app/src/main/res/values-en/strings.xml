@@ -47,4 +47,5 @@
     <string name="escuchar">TEXT-TO-SPEECH</string>
     <string name="TresEnRaya">Tic Tac Toe</string>
     <string name="alarm_msg">A message has been sent to the server.</string>
+    <string name="alarm_msg_fail">It has not been possible to contact with the server. Try again in a few minutes.</string>
 </resources>

@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+
     tools:context="es.upm.ssr.gatv.tfg.AlarmaActivity"
     tools:showIn="@layout/activity_alarma">
 
@@ -15,14 +16,25 @@
     <TextView
         android:layout_width="800dp"
         android:layout_height="wrap_content"
-        android:id="@+id/textAlarmaMensaje"
+        android:id="@+id/textMsgAlarma"
         android:textSize="70sp"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:text="@string/alarm_msg"
-        android:typeface="sans"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:padding="10dp" />
+        android:background="@drawable/border"
+        android:padding="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp" />
 
-
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageView"
+        android:baselineAlignBottom="true"
+        android:src="@drawable/alarma_2"
+        android:focusable="true"
+        android:contentDescription="@string/bckground_img"
+        android:layout_below="@+id/textMsgAlarma"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
 </RelativeLayout>

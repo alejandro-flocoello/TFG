@@ -45,4 +45,6 @@
     <string name="escuchar">ÉCOUTER LE MESSAGE</string>
     <string name="reproducir">ÉCOUTER</string>
     <string name="TresEnRaya">Tic Tac Toe</string>
+    <string name="alarm_msg">Il a envoyé un message d\'alarme au serveur .</string>
+    <string name="alarm_msg_fail">Il n\'a pas été possible de contacter le serveur.</string>
 </resources>

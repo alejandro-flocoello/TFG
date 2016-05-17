@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -33,6 +34,8 @@ public class AlarmaActivity  extends AppCompatActivity{
     String http = "http://138.4.47.33:2103/afc/home/alarma.php";
     Calendar cal ;
     String msgInitial;
+    public boolean flag = true;
+    public TextView textMsgAlarma;
 
 
 
@@ -43,6 +46,9 @@ public class AlarmaActivity  extends AppCompatActivity{
         setContentView(R.layout.activity_alarma);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        textMsgAlarma =  (TextView) findViewById(R.id.textMsgAlarma);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -119,17 +125,22 @@ public class AlarmaActivity  extends AppCompatActivity{
                 //do somehting with response
                 is = conn.getInputStream();
                 //String contentAsString = readIt(is,len);
+                flag = true;
             } catch (IOException e) {
                 e.printStackTrace();
+                flag = false;
             } catch (JSONException e) {
                 e.printStackTrace();
+                flag = false;
             } finally {
                 //clean up
                 try {
                     os.close();
                     is.close();
+                    flag = true;
                 } catch (IOException e) {
                     e.printStackTrace();
+                    flag = false;
                 }
 
                 conn.disconnect();
@@ -140,7 +151,11 @@ public class AlarmaActivity  extends AppCompatActivity{
         @Override
         protected void onPostExecute(Void result){
             Toast.makeText(getApplicationContext(),"Contactando con el SERVIDOR", Toast.LENGTH_SHORT).show();
-
+            if (flag){
+                textMsgAlarma.setText(R.string.alarm_msg);
+            } else{
+                textMsgAlarma.setText(R.string.alarm_msg_fail);
+            }
         }
     }
 

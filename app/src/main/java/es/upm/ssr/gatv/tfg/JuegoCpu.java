@@ -1,16 +1,9 @@
 package es.upm.ssr.gatv.tfg;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Random;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +17,8 @@ import android.widget.TextView;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.util.Random;
 
 public class JuegoCpu extends AppCompatActivity {
 
@@ -316,7 +311,9 @@ public class JuegoCpu extends AppCompatActivity {
                     if (R.getChildAt(x) instanceof Button) {
                         Button B = (Button) R.getChildAt(x);
                         if (B.isClickable()) {
+                            System.out.println("mejor casilla 1 :  " + board[x][y]);
                             return board[x][y];
+
                         }
                     }
                 }
@@ -338,6 +335,7 @@ public class JuegoCpu extends AppCompatActivity {
                     if (R.getChildAt(x) instanceof Button) {
                         Button B = (Button) R.getChildAt(x);
                         if (B.isClickable()) {
+                            System.out.println("casillas vacias 1: "+ casillasVacias[x][y]);
                             return (casillasVacias[x][y]);
                         }
                     }
@@ -346,16 +344,19 @@ public class JuegoCpu extends AppCompatActivity {
         }
         int column = random.nextInt(3);
         int file = random.nextInt(3);
+        System.out.println("casillas vacias 2: " + board[column][file]);
         return board[column][file];
+
     }
 
     public void juegaCpu() {
         char i = mejorCasilla();
         if (i  == '\0') {
             i = mejorCasilla();
-
+            System.out.println("mejor casilla "+i);
         }else{
             i = casillaAleatoria();
+            System.out.println("casilla aleatoria "+i);
         }
     }
 }

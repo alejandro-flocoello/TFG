@@ -180,4 +180,5 @@
     <string name="title_activity_tres_en_raya">Juegos: Tres en Raya</string>
     <string name="title_activity_tres_en_raya_menu">Tres en Raya: Menu</string>
     <string name="alarm_msg">Se ha enviado un mensaje de alarma al servidor.</string>
+    <string name="alarm_msg_fail">No ha sido posible contactar con el servidor. Inténtelo en unos minutos.</string>
 </resources>
